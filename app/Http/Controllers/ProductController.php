@@ -13,10 +13,6 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
-    public function indexNav(){
-        return view('products.index');
-    }
-    
     public function store(Request $request)
     {
         $product = new Product();
@@ -28,33 +24,72 @@ class ProductController extends Controller
         $product->prod_price = $request->input('prod_price');
         $product->prod_stock = $request->input('prod_stock');
         $product->save();
-    
-        // Save the product without setting the prod_pic yet
-        $product->save();
-    
+
         // Retrieve the auto-incremented ID of the newly saved product
         $productId = $product->id;
-    
+
         // Handle image upload if a file was uploaded
         if ($request->hasFile('prod_pic')) {
             $imageExtension = $request->file('prod_pic')->extension();
             $imageName = $productId . '.' . $imageExtension;
             $request->file('prod_pic')->move(public_path('products/images'), $imageName);
-    
+
             // Update the product record with the correct image path
             $product->prod_pic = 'products/images/' . $imageName;
             $product->save();
         }
-    
-        // Redirect back or to a different page after adding the product
-        return redirect()->back()->with('success', 'Product added successfully!');
+
+        return;
     }
-    
+
     public function delete(Request $request, $id)
     {
         $product = Product::findOrFail($id);
         $product->delete();
 
         return redirect()->back()->with('success', 'Product deleted successfully!');
+    }
+
+    public function deleteFromDetails(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
+    }
+
+    public function show(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        return view('products.prodDetails', ['product' => $product]);
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        return view('products.prodEdit', ['product' => $product]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $product->prod_title = $request->input('prod_title');
+        $product->prod_desc = $request->input('prod_desc');
+        $product->prod_brand = $request->input('prod_brand');
+        $product->prod_type = $request->input('prod_type');
+        $product->prod_price = $request->input('prod_price');
+        $product->prod_stock = $request->input('prod_stock');
+
+        // Handle image upload if a file was uploaded
+        if ($request->hasFile('prod_pic')) {
+            $imageExtension = $request->file('prod_pic')->extension();
+            $imageName = $id . '.' . $imageExtension;
+            $request->file('prod_pic')->move(public_path('products/images'), $imageName);
+            $product->prod_pic = 'products/images/' . $imageName;
+        }
+        $product->save();
+
+        // Redirect to the prodDetails view
+        return redirect()->route('products.details', ['id' => $id])->with('success', 'Product updated successfully!');
     }
 }

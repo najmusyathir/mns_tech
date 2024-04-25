@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
+
+
 
 
 Route::get('/dashboard', function () {
@@ -20,18 +22,25 @@ Route::middleware('auth')->group(function () {
 });
 
 
-//Page navigation
-Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 
-Route::view('/products/add', 'products.addProduct')->name('products.add');
+//Product Related Route
+{
+    Route::get('/product', [ProductController::class, 'index'])->name('products.index'); //goto index
 
+    Route::view('/product/add', 'products.addProduct')->name('products.add'); // goto create product page
 
-//Product related route
-Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
-Route::delete('/products/{id}', [ProductController::class, 'delete'])->name('products.delete');
+    Route::get('/product/details/{id}', [ProductController::class, 'show'])->name('products.details'); //get specific product
 
+    Route::post('/product/store', [ProductController::class, 'store'])->name('products.store'); // store product
 
+    Route::delete('/product/delete/{id}', [ProductController::class, 'delete'])->name('products.delete'); // Delete from index
 
+    Route::delete('/product/details/{id}/delete', [ProductController::class, 'deleteFromDetails'])->name('products.delete.details'); // Delete from details
 
+    Route::get('/product/details/{id}/edit', [ProductController::class, 'edit'])->name('products.edit'); //nav to edit prod page
 
-require __DIR__.'/auth.php';
+    Route::post('/product/details/{id}', [ProductController::class, 'update'])->name('products.update'); // save product //nav to edit prod page
+}
+
+//User Related Route
+require __DIR__ . '/auth.php';

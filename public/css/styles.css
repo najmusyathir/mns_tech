@@ -357,9 +357,6 @@ textarea {
 
 .form-container {
     width: clamp(200px, 100%, 800px);
-    background: #18181b;
-    padding: 2em;
-    margin: 2em;
 }
 
 .absolute {

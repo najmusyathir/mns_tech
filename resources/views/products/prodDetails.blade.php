@@ -1,5 +1,4 @@
 <?php
-
 ?>
 
 <!DOCTYPE html>
@@ -8,17 +7,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product List</title>
+    <title>Product Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 </head>
 
 <body class="font-sans antialiased dark:bg-black dark:text-white/50">
 
     <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-        <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="{{asset('assets/images/setup.jpg')}}" />
+        <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="https://laravel.com/assets/img/welcome/background.svg" alt="background picture" />
         <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-            <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
+                <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
                     <div class="flex lg:justify-center lg:col-start-2">
                         <a href="{{route('home')}}">
                             <svg class="h-12 w-auto text-white lg:h-16 lg:text-[#FF2D20]" viewBox="0 0 62 65" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,54 +47,63 @@
                     @endif
                 </header>
 
-                <div class="content flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 ">
-
-                    <div class="icons" style="position: fixed; right:50px;bottom:50px; z-index:1">
-                        <a href="{{route('products.add')}}">
-                            <img src="{{asset('assets/icons/ic_plus.svg')}}" style="width: 40px;">
+                <div class="content">
+                    <div class="flex items-center justify-center relative ">
+                        <a href="{{route('products.index')}}" class="bg-red-900 p-2 absolute rounded-full " style="top: 0;left:0">
+                            <img src="{{asset('assets/icons/ic_left.svg')}}" style="height: 40px; width:auto">
                         </a>
-                    </div>
+                        <div class="form-containermin-w-full">
+                            <div class="flex px-10 flex-wrap justify-center">
 
-                    <h1 class="font-semibold text-black dark:text-white" style="font-size: 2em;">Product List</h1>
+                                <div class="flex flex-col justify-top items-center w-1/2" style="min-width: 180px;">
+                                    <h1 class="mb-10 text-4xl font-bold text-black dark:text-white">Product Details</h1>
+                                    <img src="{{ asset($product->prod_pic) }}" alt="{{$product->prod_title}}" style="min-width:100px; margin:0 30px">
+                                </div>
 
+                                <div class="flex flex-col px-10 w-1/2 overflow-y-hidden" style="height: 70vh; min-width:180px">
 
-                    <div class="grid gap-6 lg:grid-cols-3 lg:gap-8">
-                        @foreach ($products as $product)
-                        <a id="docs-card" 
-                        
-                        href="{{route('products.details', ['id' => $product->id])}}" 
-                    
-                        class=" product flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">                            
-                            <div style="display: flex; flex-direction:row
-                                ">
-                                <div style="margin:10px">
-                                    {{ $product->prod_title }}
+                                    <h2 class="text-2xl min-h-100  font-bold">{{$product->prod_title}}</h2>
+
+                                    <div class="py-4 flex align-center justify-between">
+                                        <div>
+                                            <p class="font-semibold text-l">Brand: {{$product -> prod_brand}}</p>
+                                            <p class="font-semibold text-l">Product Type: {{$product -> prod_type}}</p>
+                                        </div>
+
+                                        <p class="text-red-700 text-3xl font-bold">RM {{$product->prod_price}}</p>
+                                    </div>
+                                    <strong class="text-xl">Description:</strong>
                                     <br>
-                                    Stock: {{ $product->prod_stock }}
-                                </div>
-                                <div>
-                                <img src="{{ asset($product->prod_pic) }}" alt="{{ $product->prod_title }}" style="max-width: 100px; max-height: 100px;">
+                                    <div class="overflow-y-scroll" style="height: 30vh;">
+                                        <p><br>{{$product -> prod_desc}}</p>
+                                    </div>
+                                    <br>
+                                    <p>
+                                        Stock available: {{$product->prod_stock}}
+                                    </p>
+                                    <div class="abs-rgt-btm flex">
 
+                                        <form method="POST" action="{{ route('products.edit', ['id' => $product->id] ) }}" class="btn" style="margin-right: 0;">
+                                            @csrf
+                                            @method('GET')
+                                            <button type="submit">Update</button>
+                                        </form>
+
+                                        <form method="POST" action="{{ route('products.delete.details', ['id' => $product->id]) }}" class="btn" style="background: #d00; color:white">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit">Delete</button>
+                                        </form>
+
+                                    </div>
                                 </div>
                             </div>
 
-                            <br>
-                            <div style="font-size: 1.2em; font-weight:600; color:#F33">
-                                RM {{ $product->prod_price }}
-                            </div>
+                        </div>
 
-                            <form method="POST" action="{{ route('products.delete', ['id' => $product->id]) }}" class="btn abs-rgt-btm">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">Delete</button>
-                            </form>
 
-                        </a>
-                        @endforeach
 
                     </div>
-
-
                 </div>
 
 
@@ -107,6 +116,20 @@
 
         </div>
     </div>
+
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview').src = e.target.result;
+                    document.getElementById('preview').style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 
 
 </body>

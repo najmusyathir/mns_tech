@@ -1,5 +1,4 @@
 <?php
-
 ?>
 
 <!DOCTYPE html>
@@ -8,17 +7,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product List</title>
+    <title>Update Product</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 </head>
 
 <body class="font-sans antialiased dark:bg-black dark:text-white/50">
 
     <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-        <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="{{asset('assets/images/setup.jpg')}}" />
+        <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="https://laravel.com/assets/img/welcome/background.svg" alt="background picture" />
         <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-            <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
+                <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
                     <div class="flex lg:justify-center lg:col-start-2">
                         <a href="{{route('home')}}">
                             <svg class="h-12 w-auto text-white lg:h-16 lg:text-[#FF2D20]" viewBox="0 0 62 65" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,54 +47,69 @@
                     @endif
                 </header>
 
-                <div class="content flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 ">
+                <div class="content">
+                    <div class="flex items-center justify-center">
+                        <div class="form-container min-w-full relative">
+                            <a href="{{route('products.index')}}" class="bg-red-900 p-2 absolute rounded-full " style="top: 0;left:0">
+                                <img src="{{asset('assets/icons/ic_left.svg')}}" style="height: 40px; width:auto">
+                            </a>
+                            <div class="form-container px-10 mx-10 my-2 min-w-full">
+                                <h1 class="text-3xl font-semibold text-black dark:text-white">Edit Product</h1>
+                                <main class="mt-6">
+                                    <form method="POST" action="{{ route('products.update', ['id' => $product->id]) }}" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('POST')
+                                        <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
+                                            <label for='prodTitle'>Product Title</label>
+                                            <input type="text" id="prodTitle" name="prod_title" placeholder="Product Title" style="padding:5px; margin:5px" value='{{$product->prod_title}}'>
+                                        </div>
 
-                    <div class="icons" style="position: fixed; right:50px;bottom:50px; z-index:1">
-                        <a href="{{route('products.add')}}">
-                            <img src="{{asset('assets/icons/ic_plus.svg')}}" style="width: 40px;">
-                        </a>
-                    </div>
+                                        <div class="my-30 mx-auto flex flex-col align-top" style="margin:10px; color: grey;">
+                                            <label for='prodDesc' style="min-width: 150px;">Product Description</label>
+                                            <textarea type="text" id="prodDesc" name="prod_desc" style="padding:5px; margin:5px">{{$product->prod_desc}}
+                                            </textarea>
+                                        </div>
 
-                    <h1 class="font-semibold text-black dark:text-white" style="font-size: 2em;">Product List</h1>
+                                        <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">
+                                            <label for='prodBrand'>Product Brand</label>
+                                            <input type="text" id="prodBrand" name="prod_brand" placeholder="Product Brand" style="padding:5px; margin:5px" value="{{$product->prod_brand}}">
+                                        </div>
 
+                                        <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">
+                                            <label for='prodType'>Product Type</label>
+                                            <input type="text" id="prodType" name="prod_type" placeholder="Product Type" style="padding:5px; margin:5px" value="{{$product->prod_type}}">
+                                        </div>
 
-                    <div class="grid gap-6 lg:grid-cols-3 lg:gap-8">
-                        @foreach ($products as $product)
-                        <a id="docs-card" 
-                        
-                        href="{{route('products.details', ['id' => $product->id])}}" 
-                    
-                        class=" product flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">                            
-                            <div style="display: flex; flex-direction:row
-                                ">
-                                <div style="margin:10px">
-                                    {{ $product->prod_title }}
-                                    <br>
-                                    Stock: {{ $product->prod_stock }}
-                                </div>
-                                <div>
-                                <img src="{{ asset($product->prod_pic) }}" alt="{{ $product->prod_title }}" style="max-width: 100px; max-height: 100px;">
+                                        <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">
+                                            Product Image
+                                            <label for='prodPic' class="prod-img-container">Upload
 
-                                </div>
+                                                <div id="image-preview" class="my-30 mx-auto" style="margin:10px;">
+                                                    <img id="preview" src="{{ asset($product->prod_pic) }}" alt="Image Preview" style="max-width: 100px; max-height: 100px;">
+                                                </div>
+                                            </label>
+
+                                            <input type="file" id="prodPic" name="prod_pic" accept="image/*" onchange="previewImage(event)" style="padding:5px; margin:5px;">
+                                        </div>
+
+                                        <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
+                                            <label for='prodPrice'>Product Price</label>
+                                            <input type="number" step="0.01" id="prodPrice" name="prod_price" placeholder="Product Price" style="padding:5px; margin:5px" value="{{$product->prod_price}}">
+                                        </div>
+
+                                        <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
+
+                                            <label for='prodStock'>Product Stock</label>
+                                            <input type="number" id="prodStock" name="prod_stock" placeholder="Product Stock" style="padding:5px; margin:5px" value="{{$product->prod_stock}}">
+                                        </div>
+
+                                        <input type="submit" value="Update" class="btn">
+                                    </form>
+                                </main>
                             </div>
 
-                            <br>
-                            <div style="font-size: 1.2em; font-weight:600; color:#F33">
-                                RM {{ $product->prod_price }}
-                            </div>
-
-                            <form method="POST" action="{{ route('products.delete', ['id' => $product->id]) }}" class="btn abs-rgt-btm">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">Delete</button>
-                            </form>
-
-                        </a>
-                        @endforeach
-
+                        </div>
                     </div>
-
-
                 </div>
 
 
@@ -107,6 +122,20 @@
 
         </div>
     </div>
+
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview').src = e.target.result;
+                    document.getElementById('preview').style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 
 
 </body>

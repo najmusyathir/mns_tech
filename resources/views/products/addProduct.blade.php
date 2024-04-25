@@ -7,7 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product List</title>
+    <title>Add Product</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 </head>
 
@@ -45,92 +46,94 @@
                 </header>
 
                 <div class="content">
-                    <div class="flex items-center justify-center">
-                        <div class="form-container p-10 m-3 min-w-full">
-                            <h1 class="text-3xl font-semibold text-black dark:text-white">Add Product</h1>
-                            <main class="mt-6">
-                                <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
-                                        <label for='prodTitle'>Product Title</label>
-                                        <input type="text" id="prodTitle" name="prod_title" placeholder="Product Title" style="padding:5px; margin:5px">
-                                    </div>
+                    <div class="flex items-center justify-center ">
+                        <div class="form-container min-w-full relative">
+                            <a href="{{route('products.index')}}" class="bg-red-900 p-2 absolute rounded-full " style="top: 0;left:0">
+                                <img src="{{asset('assets/icons/ic_left.svg')}}" style="height: 40px; width:auto">
+                            </a>
+                            
+                            <div class="form-container px-10 mx-10 my-2 min-w-full">
+                                <h1 class="text-3xl font-semibold text-black dark:text-white">Add Product</h1>
+                                <main class="mt-6">
+                                    <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
+                                            <label for='prodTitle'>Product Title</label>
+                                            <input type="text" id="prodTitle" name="prod_title" placeholder="Product Title" style="padding:5px; margin:5px">
+                                        </div>
 
-                                    <div class="my-30 mx-auto flex flex-col align-top" style="margin:10px; color: grey;">
-                                        <label for='prodDesc' style="min-width: 150px;">Product Description</label>
-                                        <textarea type="text" id="prodDesc" name="prod_desc" style="padding:5px; margin:5px">
+                                        <div class="my-30 mx-auto flex flex-col align-top" style="margin:10px; color: grey;">
+                                            <label for='prodDesc' style="min-width: 150px;">Product Description</label>
+                                            <textarea type="text" id="prodDesc" name="prod_desc" style="padding:5px; margin:5px">
                                     </textarea>
-                                    </div>
+                                        </div>
 
-                                    <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">
-                                        <label for='prodBrand'>Product Brand</label>
-                                        <input type="text" id="prodBrand" name="prod_brand" placeholder="Product Brand" style="padding:5px; margin:5px">
-                                    </div>
+                                        <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">
+                                            <label for='prodBrand'>Product Brand</label>
+                                            <input type="text" id="prodBrand" name="prod_brand" placeholder="Product Brand" style="padding:5px; margin:5px">
+                                        </div>
 
-                                    <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">
-                                        <label for='prodType'>Product Type</label>
-                                        <input type="text" id="prodType" name="prod_type" placeholder="Product Type" style="padding:5px; margin:5px">
-                                    </div>
-
-
+                                        <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">
+                                            <label for='prodType'>Product Type</label>
+                                            <input type="text" id="prodType" name="prod_type" placeholder="Product Type" style="padding:5px; margin:5px">
+                                        </div>
 
 
-                                    <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">
-                                        Product Image
-                                        <label for='prodPic' class="prod-img-container">Upload
 
-                                            <div id="image-preview" class="my-30 mx-auto" style="margin:10px;">
-                                                <img id="preview" src="#" alt="Image Preview" style="max-width: 100px; max-height: 100px; display: none;">
-                                            </div>
-                                        </label>
-                                        <input type="file" id="prodPic" name="prod_pic" accept="image/*" onchange="previewImage(event)" style="padding:5px; margin:5px;">
-                                    </div>
 
-                                    <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
-                                        <label for='prodPrice'>Product Price</label>
-                                        <input type="number" step="0.01" id="prodPrice" name="prod_price" placeholder="Product Price" style="padding:5px; margin:5px">
-                                    </div>
+                                        <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">
+                                            Product Image
+                                            <label for='prodPic' class="prod-img-container">Upload
 
-                                    <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
+                                                <div id="image-preview" class="my-30 mx-auto" style="margin:10px;">
+                                                    <img id="preview" src="#" alt="Image Preview" style="max-width: 100px; max-height: 100px; display: none;">
+                                                </div>
+                                            </label>
+                                            <input type="file" id="prodPic" name="prod_pic" accept="image/*" onchange="previewImage(event)" style="padding:5px; margin:5px;">
+                                        </div>
 
-                                        <label for='prodStock'>Product Stock</label>
-                                        <input type="number" id="prodStock" name="prod_stock" placeholder="Product Stock" style="padding:5px; margin:5px">
-                                    </div>
+                                        <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
+                                            <label for='prodPrice'>Product Price</label>
+                                            <input type="number" step="0.01" id="prodPrice" name="prod_price" placeholder="Product Price" style="padding:5px; margin:5px">
+                                        </div>
 
-                                    <input type="submit" value="Add" class="btn">
-                                </form>
+                                        <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
+
+                                            <label for='prodStock'>Product Stock</label>
+                                            <input type="number" id="prodStock" name="prod_stock" placeholder="Product Stock" style="padding:5px; margin:5px">
+                                        </div>
+
+                                        <input type="submit" value="Add" class="btn">
+                                    </form>
+                                </main>
+                            </div>
                         </div>
-
-
-
                     </div>
-                    </main>
+
+
                 </div>
-
-
 
                 <footer class="py-16 text-center text-sm text-black dark:text-white/70">
                     Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                 </footer>
+
+
             </div>
-
-
         </div>
-    </div>
 
-    <script>
-        function previewImage(event) {
-            var input = event.target;
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('preview').src = e.target.result;
-                    document.getElementById('preview').style.display = 'block';
-                };
-                reader.readAsDataURL(input.files[0]);
+        <script>
+            function previewImage(event) {
+                var input = event.target;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('preview').src = e.target.result;
+                        document.getElementById('preview').style.display = 'block';
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
             }
-        }
-    </script>
+        </script>
 
 
 </body>
