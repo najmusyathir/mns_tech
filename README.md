@@ -11,3 +11,18 @@
 
 
 Welcome to MNS Tech Store, your one-stop shop for all things PC! Whether you're a hardcore gamer, a digital artist, or a professional in need of powerful computing solutions, we've got you covered. Explore our wide range of products, from cutting-edge gaming rigs to high-performance workstations, and discover the perfect PC for your needs. With top brands, expert advice, and unbeatable prices, MNS Tech Store is the ultimate destination for all your PC shopping needs.
+
+
+## LARAVEL SETUP
+
+- Install composer
+- Download php.zip at PHP official website
+- Save it in C:php/
+- Rename file php.ini-development to php.ini
+- Enable comments extension:
+    > openssl
+    > pdo_mysql
+    > zip
+
+- run "composer install" in DIR of imported project
+- run "php artisan serve"
