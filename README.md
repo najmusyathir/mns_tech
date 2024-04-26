@@ -25,4 +25,7 @@ Welcome to MNS Tech Store, your one-stop shop for all things PC! Whether you're 
     > zip
 
 - run "composer install" in DIR of imported project
+- copy .env.example = paste and rename it as .env
+- run "php artisan migrate"
+- run "php artisan key:generate"
 - run "php artisan serve"
