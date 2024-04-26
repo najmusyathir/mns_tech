@@ -39,7 +39,7 @@ class ProductController extends Controller
             $product->save();
         }
 
-        return;
+        return redirect()->route('products.index')->with('success', 'Product updated successfully!');;
     }
 
     public function delete(Request $request, $id)
