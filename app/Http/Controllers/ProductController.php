@@ -45,7 +45,13 @@ class ProductController extends Controller
     public function delete(Request $request, $id)
     {
         $product = Product::findOrFail($id);
+        $imagePath = public_path($product->prod_pic);
+
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
         $product->delete();
+
 
         return redirect()->back()->with('success', 'Product deleted successfully!');
     }
@@ -53,6 +59,12 @@ class ProductController extends Controller
     public function deleteFromDetails(Request $request, $id)
     {
         $product = Product::findOrFail($id);
+        $imagePath = public_path($product->prod_pic);
+
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+
         $product->delete();
 
         return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
