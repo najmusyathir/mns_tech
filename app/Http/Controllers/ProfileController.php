@@ -37,6 +37,24 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
+
+    //Update phonr_no and address only
+    public function updatePhoneAndAddress(Request $request)
+    {
+        $request->validate([
+            'phone_no' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
+        ]);
+    
+        $user = $request->user();
+        $user->phone_no = $request->phone_no;
+        $user->address = $request->address;
+        $user->save();
+    
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+    
+
     /**
      * Delete the user's account.
      */
