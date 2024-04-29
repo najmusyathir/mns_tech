@@ -48,7 +48,7 @@
                 <div class="content">
                     <div class="flex items-center justify-center ">
                         <div class="form-container min-w-full relative">
-                            <a href="{{route('products.index')}}" class="bg-red-900 p-2 absolute rounded-full " style="top: 0;left:0">
+                            <a href="{{route('products.index')}}" class=" p-2 rounded-full " style="top: 0;left:0">
                                 <img src="{{asset('assets/icons/ic_left.svg')}}" style="height: 40px; width:auto">
                             </a>
                             
@@ -59,23 +59,23 @@
                                         @csrf
                                         <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
                                             <label for='prodTitle'>Product Title</label>
-                                            <input type="text" id="prodTitle" name="prod_title" placeholder="Product Title" style="padding:5px; margin:5px">
+                                            <input type="text" id="prodTitle" name="prod_title" placeholder="Product Title" >
                                         </div>
 
                                         <div class="my-30 mx-auto flex flex-col align-top" style="margin:10px; color: grey;">
                                             <label for='prodDesc' style="min-width: 150px;">Product Description</label>
-                                            <textarea type="text" id="prodDesc" name="prod_desc" style="padding:5px; margin:5px">
+                                            <textarea type="text" id="prodDesc" name="prod_desc" >
                                     </textarea>
                                         </div>
 
                                         <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">
                                             <label for='prodBrand'>Product Brand</label>
-                                            <input type="text" id="prodBrand" name="prod_brand" placeholder="Product Brand" style="padding:5px; margin:5px">
+                                            <input type="text" id="prodBrand" name="prod_brand" placeholder="Product Brand">
                                         </div>
 
                                         <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">
                                             <label for='prodType'>Product Type</label>
-                                            <input type="text" id="prodType" name="prod_type" placeholder="Product Type" style="padding:5px; margin:5px">
+                                            <input type="text" id="prodType" name="prod_type" placeholder="Product Type" >
                                         </div>
 
 
@@ -94,13 +94,13 @@
 
                                         <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
                                             <label for='prodPrice'>Product Price</label>
-                                            <input type="number" step="0.01" id="prodPrice" name="prod_price" placeholder="Product Price" style="padding:5px; margin:5px">
+                                            <input type="number" step="0.01" id="prodPrice" name="prod_price" placeholder="Product Price" >
                                         </div>
 
                                         <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
 
                                             <label for='prodStock'>Product Stock</label>
-                                            <input type="number" id="prodStock" name="prod_stock" placeholder="Product Stock" style="padding:5px; margin:5px">
+                                            <input type="number" id="prodStock" name="prod_stock" placeholder="Product Stock" >
                                         </div>
 
                                         <input type="submit" value="Add" class="btn">
