@@ -4,13 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Cart;
 
 class ProductController extends Controller
 {
-    public function index() //controller to products list page
+    public function index()
     {
         $products = Product::all();
-        return view('products.index', compact('products'));
+
+        
+        if(auth()->check()) {
+            $userId = auth()->user()->id;
+            $carts = Cart::where('user_id', $userId)->get();
+        } else {
+            $carts = [];
+        }
+    
+        return view('products.index', compact('products', 'carts'));
     }
 
     public function store(Request $request)
@@ -39,7 +49,7 @@ class ProductController extends Controller
             $product->save();
         }
 
-        return redirect()->route('products.index')->with('success', 'Product updated successfully!');;
+        return redirect()->route('products.index')->with('success', 'Product updated successfully!');
     }
 
     public function delete(Request $request, $id)

@@ -48,9 +48,9 @@
                 <div class="content">
                     <div class="flex items-center justify-center ">
                         <div class="form-container min-w-full relative">
-                            <a href="{{route('products.index')}}" class=" p-2 rounded-full " style="top: 0;left:0">
-                                <img src="{{asset('assets/icons/ic_left.svg')}}" style="height: 40px; width:auto">
-                            </a>
+                        <a href="{{route('products.index')}}" class="bg-red-900 p-2 absolute rounded-full " style="top: 0;left:0">
+                            <img src="{{asset('assets/icons/ic_left.svg')}}" style="height: 40px; width:auto">
+                        </a>
                             
                             <div class="form-container px-10 mx-10 my-2 min-w-full">
                                 <h1 class="text-3xl font-semibold text-black dark:text-white">Add Product</h1>
@@ -77,8 +77,6 @@
                                             <label for='prodType'>Product Type</label>
                                             <input type="text" id="prodType" name="prod_type" placeholder="Product Type" >
                                         </div>
-
-
 
 
                                         <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">

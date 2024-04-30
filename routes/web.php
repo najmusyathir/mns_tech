@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -29,12 +30,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/product', [ProductController::class, 'index'])->name('products.index'); //goto index
     Route::view('/product/add', 'products.addProduct')->name('products.add'); // goto create product page
     Route::get('/product/details/{id}', [ProductController::class, 'show'])->name('products.details'); //get specific product
+
     Route::post('/product/store', [ProductController::class, 'store'])->name('products.store'); // store product
+
     Route::delete('/product/delete/{id}', [ProductController::class, 'delete'])->name('products.delete'); // Delete from index
     Route::delete('/product/details/{id}/delete', [ProductController::class, 'deleteFromDetails'])->name('products.delete.details'); // Delete from details
     Route::get('/product/details/{id}/edit', [ProductController::class, 'edit'])->name('products.edit'); //nav to edit prod page
     Route::post('/product/details/{id}', [ProductController::class, 'update'])->name('products.update'); // save product //nav to edit prod page
 }
 
-//User Related Route
+//Cart Related Route
+{
+    Route::post('product/cart/add', [CartController::class,'addItem'])->name('cart.addItem');
+    Route::delete('product/cart/remove/{cart_id}', [CartController::class,'removeItem'])->name('cart.removeItem');
+
+
+}
+
+
 require __DIR__ . '/auth.php';
