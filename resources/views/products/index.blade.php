@@ -12,7 +12,7 @@
 
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
@@ -91,36 +91,60 @@
                                     Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
 
                                     <!-- Cart Items -->
-                                    <div class="flex flex-col">
+                                    <div class="flex flex-col ">
                                         @foreach ($carts as $cart)
+
                                         @if ($cart->product)
+                                        <div class="my-2 product flex flex-col items-start overflow-hidden rounded-lg p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
+                                            <a id="docs-card" href="{{route('products.details', ['id' => $cart->product->id])}}" class="">
+                                                <div style="display: flex; flex-direction:row; position:relative">
+                                                    <div>
+                                                        <img src="{{ asset($cart->product->prod_pic) }}" alt="{{ $cart->product->prod_title }}" style="max-width: 100px; max-height: 100px;">
+                                                    </div>
+                                                    <div style="margin:10px">
+                                                        {{ $cart->product->prod_title }}
+                                                        <br>
+                                                        <div class="flex m-2">
+                                                            <form method="POST" action="{{route('cart.minus', ['cart_id' => $cart->cart_id])}}" style="padding: 5px; background:red; height: 25px; width: 25px;">
+                                                                @csrf
+                                                                <button type="submit">
+                                                                    <img src="{{asset('assets/icons/ic_minus_white.svg')}}" style="width: 100%">
+                                                                </button>
+                                                            </form>
 
-                                        <a id="docs-card" href="" class=" my-2 product flex flex-col items-start gap-6 overflow-hidden rounded-lg p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
-                                            <div style="display: flex; flex-direction:row;">
-                                                <div>
-                                                    <img src="{{ asset($cart->product->prod_pic) }}" alt="{{ $cart->product->prod_title }}" style="max-width: 100px; max-height: 100px;">
+                                                            <div style="padding: 5px; background:none;
+                                                            display: flex; justify-content:center; font-weight: 600; align-items:center;
+                                                            text-align:center; height: 25px; width: 35px;">
+                                                                {{$cart->quantity }}
+                                                            </div>
+                                                            <form method="POST" action="{{route('cart.add', ['cart_id' => $cart->cart_id])}}" style="padding: 5px; background:red; height: 25px; width: 25px;">
+                                                                @csrf
+                                                                <button type="submit">
+                                                                    <img src="{{asset('assets/icons/ic_plus_white.svg')}}" style="width: 100%">
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div style="margin:10px">
-                                                    {{ $cart->product->prod_title }}
-                                                    <br>
+
+                                                <br>
+                                                <div style="font-size: 1.2em; font-weight:600; color:#F33;">
+                                                    RM {{ $cart->product->prod_price }}
+                                                </div>
+                                                <!-- Edit for AddtoCart button -->
+                                                <div style="width: 100%; display: flex; justify-content: end">
+                                                    <form method="POST" action="{{route('cart.removeItem', ['cart_id' => $cart->cart_id])}}" class="btn" style="margin: 0">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit">Remove</button>
+                                                    </form>
                                                 </div>
 
+                                            </a>
+                                        </div>
 
-                                            </div>
-
-                                            <br>
-                                            <div style="font-size: 1.2em; font-weight:600; color:#F33">
-                                                RM {{ $cart->product->prod_price }}
-                                            </div>
-                                            <!-- Edit for AddtoCart button -->
-                                            <form method="POST" action="{{route('cart.removeItem', ['cart_id' => $cart->cart_id])}}" class="btn abs-rgt-btm">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit">Remove</button>
-                                            </form>
-
-                                        </a>
                                         @endif
+
                                         @endforeach
 
                                     </div>
@@ -151,7 +175,6 @@
                                     RM {{ $product->prod_price }}
                                 </div>
 
-                                <!-- Edit for Delete button -->
                                 @if (Auth::user()->user_type === 'admin')
 
                                 <form method="POST" action="{{ route('products.delete', ['id' => $product->id]) }}" class="btn abs-rgt-btm">

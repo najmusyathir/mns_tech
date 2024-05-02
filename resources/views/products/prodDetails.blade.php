@@ -81,6 +81,7 @@
                                     <p>
                                         Stock available: {{$product->prod_stock}}
                                     </p>
+                                    @if (Auth::user()->user_type === 'admin')
                                     <div class="abs-rgt-btm flex">
 
                                         <form method="POST" action="{{ route('products.edit', ['id' => $product->id] ) }}" class="btn" style="margin-right: 0;">
@@ -94,8 +95,18 @@
                                             @method('DELETE')
                                             <button type="submit">Delete</button>
                                         </form>
-
                                     </div>
+
+                                    @else
+                                    <form method="POST" action="{{ route('cart.addItem') }}" class="btn abs-rgt-btm">
+                                        @csrf
+                                        <input type='hidden' name="user_id" value="{{ auth()->user()->id }}">
+                                        <input type='hidden' name="product_id" value="{{$product->id}}">
+                                        <input type='hidden' name='quantity' value='1'>
+                                        <button type="submit">Add to Cart</button>
+                                    </form>
+
+                                    @endif
                                 </div>
                             </div>
 

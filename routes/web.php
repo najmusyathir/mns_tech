@@ -43,8 +43,8 @@ Route::middleware('auth')->group(function () {
 {
     Route::post('product/cart/add', [CartController::class,'addItem'])->name('cart.addItem');
     Route::delete('product/cart/remove/{cart_id}', [CartController::class,'removeItem'])->name('cart.removeItem');
-
-
+    Route::post('/product/cart/add/{cart_id}', [CartController::class, 'incrementItem'])->name('cart.add');
+    Route::post('/product/cart/minus/{cart_id}', [CartController::class, 'decrementItem'])->name('cart.minus');
 }
 
 
