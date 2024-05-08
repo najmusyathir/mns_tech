@@ -29,3 +29,9 @@ Welcome to MNS Tech Store, your one-stop shop for all things PC! Whether you're 
 - run "php artisan migrate"
 - run "php artisan key:generate"
 - run "php artisan serve"
+
+
+## Basic cli syntax
+- start server >> php artisan serve
+- create migration file >> php artisan make:migration action_name
+- migrate files >> php artisan migrate
