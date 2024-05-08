@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cart;
+use App\Models\Product;
 
 
 class CartController extends Controller
@@ -48,8 +49,6 @@ class CartController extends Controller
         // Redirect back with success message
         return redirect()->back()->with('success', 'Product added to cart!');
     }
-
-
     public function removeItem(Request $request, $cart_id)
     {
         $cart = Cart::findOrFail($cart_id);
@@ -70,7 +69,6 @@ class CartController extends Controller
         }
     }
 
-
     public function decrementItem(Request $request)
     {
         $cart_id = $request->cart_id;
@@ -83,5 +81,23 @@ class CartController extends Controller
                 return redirect()->back()->with('success', 'Quantity increased!');
             }
         }
+    }
+
+    public function totalPrice()
+    {
+        $totalPrice = 0;
+        $userId = auth()->id();
+        $carts = Cart::where('user_id', $userId)->get();
+
+        foreach ($carts as $cart) {
+            $product = Product::find($cart->product_id);
+            if ($product) {
+                $subtotal = $product->prod_price * $cart->quantity;
+                $totalPrice += $subtotal;
+            }
+        }
+        $formattedTotalPrice = number_format($totalPrice, 2);
+
+        return response()->json(['totalPrice' => $formattedTotalPrice]);;
     }
 }
