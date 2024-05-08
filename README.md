@@ -35,3 +35,4 @@ Welcome to MNS Tech Store, your one-stop shop for all things PC! Whether you're 
 - start server >> php artisan serve
 - create migration file >> php artisan make:migration action_name
 - migrate files >> php artisan migrate
+- create controller file >> php artisan make:controller NameController

@@ -22,10 +22,11 @@
 <body class="font-sans antialiased dark:bg-black dark:text-white/50">
 
     <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-        <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="{{asset('assets/images/setup.jpg')}}" />
+        <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="{{asset('assets/images/setup.jpg')}}" alt="background_pic" />
         <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
 
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
+
                 <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
                     <div class="flex lg:justify-center lg:col-start-2">
                         <a href="{{route('home')}}">
@@ -66,8 +67,7 @@
 
 
                     @else
-
-                    <!-- Cart -->
+                    <!-- Cart Drawer-->
                     <div class="BS-drawer">
 
                         <button class="relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" style="position: fixed; right:50px;bottom:50px; z-index:1">
@@ -87,8 +87,7 @@
                                 </button>
                             </div>
                             <div class="offcanvas-body bg-none">
-                                <div class="text-white">
-                                    Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+                                <div class="text-white relative">
 
                                     <!-- Cart Items -->
                                     <div class="flex flex-col ">
@@ -144,71 +143,73 @@
                                         </div>
 
                                         @endif
-
                                         @endforeach
-
                                     </div>
 
                                 </div>
                             </div>
+
+
+                            <div class="offcanvas-footer p-3">
+                                <h2 class="text-2xl font-bold text-gray-50">Total Price: RM <span id="totalPrice">Loading...</span></h2>
+                                <button class="btn m-0 my-3 w-full">Checkout</button>
+                            </div>
                         </div>
-                        @endif
-                        <h1 class="font-semibold text-black dark:text-white" style="font-size: 2em; color: white !important">Product List</h1>
-
-                        <!-- Items container -->
-                        <div class="grid gap-6 lg:grid-cols-3 lg:gap-8">
-                            @foreach ($products as $product)
-                            <a id="docs-card" href="{{route('products.details', ['id' => $product->id])}}" class=" product flex flex-col items-start gap-6 overflow-hidden rounded-lg p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
-                                <div style="display: flex; flex-direction:row;">
-                                    <div style="margin:10px">
-                                        {{ $product->prod_title }}
-                                        <br>
-                                        Stock: {{ $product->prod_stock }}
-                                    </div>
-                                    <div>
-                                        <img src="{{ asset($product->prod_pic) }}" alt="{{ $product->prod_title }}" style="max-width: 100px; max-height: 100px;">
-                                    </div>
-                                </div>
-
-                                <br>
-                                <div style="font-size: 1.2em; font-weight:600; color:#F33">
-                                    RM {{ $product->prod_price }}
-                                </div>
-
-                                @if (Auth::user()->user_type === 'admin')
-
-                                <form method="POST" action="{{ route('products.delete', ['id' => $product->id]) }}" class="btn abs-rgt-btm">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit">Delete</button>
-                                </form>
-
-                                @else
-
-                                <form method="POST" action="{{ route('cart.addItem') }}" class="btn abs-rgt-btm">
-                                    @csrf
-                                    <input type='hidden' name="user_id" value="{{ auth()->user()->id }}">
-                                    <input type='hidden' name="product_id" value="{{$product->id}}">
-                                    <input type='hidden' name='quantity' value='1'>
-                                    <button type="submit">Add to Cart</button>
-                                </form>
-
-                                @endif
-
-                            </a>
-                            @endforeach
-
-                        </div>
-
-
                     </div>
 
+                    @endif
 
+                    <h1 class="font-semibold text-black dark:text-white" style="font-size: 2em; color: white !important">Product List</h1>
 
-                    <footer class="py-16 text-center text-sm text-black dark:text-white/70">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-                    </footer>
+                    <!-- Product List container -->
+                    <div class="grid gap-6 lg:grid-cols-3 lg:gap-8">
+                        @foreach ($products as $product)
+                        <a id="docs-card" href="{{route('products.details', ['id' => $product->id])}}" class=" product flex flex-col items-start gap-6 overflow-hidden rounded-lg p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
+                            <div style="display: flex; flex-direction:row;">
+                                <div style="margin:10px">
+                                    {{ $product->prod_title }}
+                                    <br>
+                                    Stock: {{ $product->prod_stock }}
+                                </div>
+                                <div>
+                                    <img src="{{ asset($product->prod_pic) }}" alt="{{ $product->prod_title }}" style="max-width: 100px; max-height: 100px;">
+                                </div>
+                            </div>
+
+                            <br>
+                            <div style="font-size: 1.2em; font-weight:600; color:#F33">
+                                RM {{ $product->prod_price }}
+                            </div>
+
+                            @if (Auth::user()->user_type === 'admin')
+
+                            <form method="POST" action="{{ route('products.delete', ['id' => $product->id]) }}" class="btn abs-rgt-btm">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Delete</button>
+                            </form>
+
+                            @else
+
+                            <form method="POST" action="{{ route('cart.addItem') }}" class="btn abs-rgt-btm">
+                                @csrf
+                                <input type='hidden' name="user_id" value="{{ auth()->user()->id }}">
+                                <input type='hidden' name="product_id" value="{{$product->id}}">
+                                <input type='hidden' name='quantity' value='1'>
+                                <button type="submit">Add to Cart</button>
+                            </form>
+
+                            @endif
+
+                        </a>
+                        @endforeach
+                    </div>
+
                 </div>
+
+                <footer class="py-16 text-center text-sm text-black dark:text-white/70">
+                    Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+                </footer>
 
 
             </div>
@@ -220,6 +221,18 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
+        <script>
+            // Make an AJAX GET request to the route
+            fetch("{{ route('cart.total') }}")
+                .then(response => response.json())
+                .then(data => {
+                    // Update the total price in the HTML
+                    document.getElementById('totalPrice').innerText = data.totalPrice;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        </script>
 
 </body>
 
