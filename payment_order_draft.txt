@@ -1,0 +1,57 @@
+
+Steps:
+
+1. User press checkout
+	- create orders >> create order_items
+	- 
+	
+2. Carry all items in cart, list in payment invoice page (checkout.blade.php).
+ - payment status (pending, paid).
+ -
+
+3. 
+
+
+payment status submitted / reviewed / approve / rejected
+order status: pending payment / item processed / item posted
+
+
+
+#TO-DO:
+1. Add total price in Cart.
+2. Checkout button.
+
+
+1. user checkout:
+table Prod:
+- product quantity berkurang..
+
+insert in transaction table>>
+  - transaction_id
+         - array of products [ prod_id , quantity ]
+         - transaction status: [ onhold ] / approve / rejected
+
+
+2. admin approve:
+click approve > trigger function :  
+
+update transaction table>>
+  - transaction_id
+         - transaction status: onhold /  [ approve ] / rejected
+
+3. admin decline:
+click decline > trigger function :  
+
+update transaction table>>
+  - still got prod_id , quantity {will be use to rollback prod table}
+  - transaction_id
+         - transaction status: onhold /  approve  / [ rejected ]
+
+update product table>>
+  -prod_id > add quantity
+
+page Admin approval:
+select * from transaction_table
+where transaction_status = "onhold"
+
+once dh checkout, even paid pending... > product already out of stocks
