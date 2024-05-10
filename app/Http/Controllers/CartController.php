@@ -98,6 +98,6 @@ class CartController extends Controller
         }
         $formattedTotalPrice = number_format($totalPrice, 2);
 
-        return response()->json(['totalPrice' => $formattedTotalPrice]);;
+        return response()->json(['totalPrice' => $formattedTotalPrice]);
     }
 }

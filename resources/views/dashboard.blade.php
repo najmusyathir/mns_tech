@@ -1,15 +1,14 @@
 <x-app-layout style="background: #000;">
-    <x-slot name="header" >
-        <h2 class="font-semibold text-xl leading-tight" style="color: white">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
 
-    <div class="py-12 min-h-screen" style="background: black">
+    <div class="py-2 min-h-screen" style="background: black">
+        <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="{{asset('assets/images/setup.jpg')}}" alt="background_pic" />
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
                 <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
                     <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
+                        <h2 class="font-semibold text-4xl my-10 leading-tight" style="color: white; z-index:10 !important;">
+                            {{ __('Dashboard') }}
+                        </h2>
 
                         <main class="mt-6">
                             <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">

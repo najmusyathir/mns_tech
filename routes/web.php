@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -41,11 +42,17 @@ Route::middleware('auth')->group(function () {
 
 //Cart Related Route
 {
-    Route::post('product/cart/add', [CartController::class,'addItem'])->name('cart.addItem');
-    Route::delete('product/cart/remove/{cart_id}', [CartController::class,'removeItem'])->name('cart.removeItem');
+    Route::post('product/cart/add', [CartController::class, 'addItem'])->name('cart.addItem');
+    Route::delete('product/cart/remove/{cart_id}', [CartController::class, 'removeItem'])->name('cart.removeItem');
     Route::post('/product/cart/add/{cart_id}', [CartController::class, 'incrementItem'])->name('cart.add');
     Route::post('/product/cart/minus/{cart_id}', [CartController::class, 'decrementItem'])->name('cart.minus');
     Route::get('/product/cart/total', [CartController::class, 'totalPrice'])->name('cart.total');
+}
+
+//ORder Related Route
+{
+    Route::get('/order', [OrderController::class, 'index'])->name('orders'); // goto create product page
+    Route::post('order/create', [OrderController::class, 'create'])->name('order.create');
 }
 
 

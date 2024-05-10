@@ -48,10 +48,10 @@
                 <div class="content">
                     <div class="flex items-center justify-center ">
                         <div class="form-container min-w-full relative">
-                        <a href="{{route('products.index')}}" class="bg-red-900 p-2 absolute rounded-full " style="top: 0;left:0">
-                            <img src="{{asset('assets/icons/ic_left.svg')}}" style="height: 40px; width:auto">
-                        </a>
-                            
+                            <a href="{{route('products.index')}}" class="bg-red-900 p-2 absolute rounded-full " style="top: 0;left:0">
+                                <img src="{{asset('assets/icons/ic_left.svg')}}" style="height: 40px; width:auto">
+                            </a>
+
                             <div class="form-container px-10 mx-10 my-2 min-w-full">
                                 <h1 class="text-3xl font-semibold text-black dark:text-white">Add Product</h1>
                                 <main class="mt-6">
@@ -59,13 +59,12 @@
                                         @csrf
                                         <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
                                             <label for='prodTitle'>Product Title</label>
-                                            <input type="text" id="prodTitle" name="prod_title" placeholder="Product Title" >
+                                            <input type="text" id="prodTitle" name="prod_title" placeholder="Product Title">
                                         </div>
 
                                         <div class="my-30 mx-auto flex flex-col align-top" style="margin:10px; color: grey;">
                                             <label for='prodDesc' style="min-width: 150px;">Product Description</label>
-                                            <textarea type="text" id="prodDesc" name="prod_desc" >
-                                    </textarea>
+                                            <textarea type="text" id="prodDesc" name="prod_desc"></textarea>
                                         </div>
 
                                         <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">
@@ -75,7 +74,7 @@
 
                                         <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">
                                             <label for='prodType'>Product Type</label>
-                                            <input type="text" id="prodType" name="prod_type" placeholder="Product Type" >
+                                            <input type="text" id="prodType" name="prod_type" placeholder="Product Type">
                                         </div>
 
 
@@ -92,13 +91,13 @@
 
                                         <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
                                             <label for='prodPrice'>Product Price</label>
-                                            <input type="number" step="0.01" id="prodPrice" name="prod_price" placeholder="Product Price" >
+                                            <input type="number" step="0.01" id="prodPrice" name="prod_price" placeholder="Product Price">
                                         </div>
 
                                         <div class="my-30 mx-auto flex flex-col" style="margin:10px; color: grey">
 
                                             <label for='prodStock'>Product Stock</label>
-                                            <input type="number" id="prodStock" name="prod_stock" placeholder="Product Stock" >
+                                            <input type="number" id="prodStock" name="prod_stock" placeholder="Product Stock">
                                         </div>
 
                                         <input type="submit" value="Add" class="btn">
