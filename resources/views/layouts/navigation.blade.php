@@ -1,7 +1,19 @@
+<style>
+    .nav-button {
+        color: bbb;
+        font-weight: 600;
+    }
+
+    .nav-button:hover {
+        color: white !important;
+        font-weight: 600;
+
+    }
+</style>
 <nav x-data="{ open: false }" class="bg-black border-b border-gray-900">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style=" z-index:20; position: relative">
-        <div class="flex justify-between h-16" >
+        <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
@@ -12,14 +24,12 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex text-red-50">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-red-50">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="nav-button">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('orders')" :active="request()->routeIs('orders')" class="text-red-50">
-                        {{ __('Orders') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-red-50">
-                        {{ __('Dashboard') }}
+
+                    <x-nav-link :href="route('products.index')" :active="request()->routeIs('product_list')" class="nav-button">
+                        Product List
                     </x-nav-link>
                 </div>
             </div>
@@ -44,12 +54,15 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
+                        <x-dropdown-link :href="route('orders.index')">
+                            My Orders
+                        </x-dropdown-link>
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -94,8 +107,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>

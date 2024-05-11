@@ -118,12 +118,23 @@ textarea {
     padding: 0;
 }
 
-input, textarea{
+.order-table {
+    table,
+    td,
+    thead {
+        padding: 10px;
+        color: white;
+        border: white solid 1px;
+    }
+}
+
+input,
+textarea {
     background: none;
     border: red 2px solid;
     border-radius: 10px;
     padding: 15px;
-    margin:10px
+    margin: 10px;
 }
 
 button,
@@ -844,7 +855,7 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin:20px;
+    margin: 20px;
 
     overflow: hidden;
     &:hover {
@@ -852,14 +863,13 @@ textarea {
     }
 }
 
-#image-preview{
+#image-preview {
     position: absolute;
     width: 100%;
 
-    img{
+    img {
         width: 100%;
     }
-    
 }
 
 @media (min-width: 640px) {

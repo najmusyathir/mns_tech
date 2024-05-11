@@ -49,10 +49,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/product/cart/total', [CartController::class, 'totalPrice'])->name('cart.total');
 }
 
-//ORder Related Route
+//Order Related Route
 {
-    Route::get('/order', [OrderController::class, 'index'])->name('orders'); // goto create product page
+    Route::get('/order', [OrderController::class, 'index'])->name('orders.index');
     Route::post('order/create', [OrderController::class, 'create'])->name('order.create');
+    Route::get('/order/details/{order_id}', [OrderController::class, 'order_details'])->name('order.details');
+    
+    Route::post('/order/details/{order_id}/payment', [OrderController::class, 'update_payment'])->name('order.update_payment');
 }
 
 

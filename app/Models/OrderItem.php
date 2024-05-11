@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderItem extends Model
 {
+    use HasFactory;
 
     public $timestamps = false;
     public $fillable = [
@@ -17,4 +18,9 @@ class OrderItem extends Model
         "quantity",
         "price_per_item"
     ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }
