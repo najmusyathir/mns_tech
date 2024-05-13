@@ -31,6 +31,13 @@
                     <x-nav-link :href="route('products.index')" :active="request()->routeIs('product_list')" class="nav-button">
                         Product List
                     </x-nav-link>
+                    @if (Auth::user()->user_type === 'admin')
+                    <x-nav-link :href="route('order.index')" :active="request()->routeIs('product_list')" class="nav-button">
+                        Orders
+                    </x-nav-link>
+                    @endif
+
+
                 </div>
             </div>
 
@@ -54,9 +61,11 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('orders.index')">
+                        @if (Auth::user()->user_type === 'user')
+                        <x-dropdown-link :href="route('order.index')">
                             My Orders
                         </x-dropdown-link>
+                        @endif
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">

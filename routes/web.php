@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -51,11 +52,22 @@ Route::middleware('auth')->group(function () {
 
 //Order Related Route
 {
-    Route::get('/order', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/order', [OrderController::class, 'index'])->name('order.index');
     Route::post('order/create', [OrderController::class, 'create'])->name('order.create');
     Route::get('/order/details/{order_id}', [OrderController::class, 'order_details'])->name('order.details');
-    
-    Route::post('/order/details/{order_id}/payment', [OrderController::class, 'update_payment'])->name('order.update_payment');
+
+    //admin
+    Route::get('/orders/{status?}', [OrderController::class, 'adminIndex'])->name('order.admin_index');
+}
+
+//Payment Related Route
+{
+    Route::get('order/payment/{order_id}', [PaymentController::class, 'attempt'])->name('payment.attempt');
+    Route::post('payment/create', [PaymentController::class, 'create'])->name('payment.create');
+    Route::delete('product/payment/remove/{payment_id}', [PaymentController::class, 'delete'])->name('payment.delete');
+
+    //admin
+    Route::post('/order/payment/{id}/update_status', [PaymentController::class, 'update_status'])->name('payment.update_status');
 }
 
 

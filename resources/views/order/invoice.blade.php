@@ -7,35 +7,30 @@
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
 
                     <div class="content " style="border-radius: 20px; background: #0009;">
-                        <div class="flex flex-col items-center justify-center relative p-10 ">
+                        <div class="flex flex-col items-center justify-center relative p-10" style="height:300px">
                             <a href="{{route('products.index')}}" class="bg-red-900 p-2 m-4 absolute rounded-full " style="top: 0;left:0">
                                 <img src="{{asset('assets/icons/ic_left.svg')}}" style="height: 40px; width:auto">
                             </a>
 
 
-                            <h2 class="text-3xl text-semibold text-white"> this is checkout page</h2>
+                            <img src="{{asset('assets/icons/ic_tick_green.svg')}}" style="height: 40px; width:auto">
+                            <h2 class="text-3xl font-semibold text-white">Order successfully created</h2>
                             <br>
 
-                            <h1>Items</h1><br>
-                            <div class="flex flex-col">
-                                <div id="order_items">
-
-                                </div>
-
-                            </div>
                         </div>
                     </div>
-
-
-
-                    <footer class="py-16 text-center text-sm text-black dark:text-white/70">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-                    </footer>
                 </div>
 
 
+
+                <footer class="py-16 text-center text-sm text-black dark:text-white/70">
+                    Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+                </footer>
             </div>
+
+
         </div>
+    </div>
     </div>
 
     <script>

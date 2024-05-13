@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Payment extends Model
 {
     use HasFactory;
 
-    public $fillable = [        
-        'user_id',
-        'total_price',
+    public $fillable = [
+        'order_id',
         'status',
         'payment_evidence',
         'created_at',

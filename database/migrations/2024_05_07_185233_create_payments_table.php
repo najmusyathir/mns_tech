@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('payment_evidence');
             $table->string('status');
             $table->timestamps();
-            $table->foreign('order_id')->references('order_id')->on('orders')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 

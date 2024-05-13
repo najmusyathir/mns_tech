@@ -847,6 +847,22 @@ textarea {
     }
 }
 
+.green-btn {
+    margin: 40px;
+    padding: 10px 30px;
+    border-radius: 0.3rem;
+    border: #0f0 solid 1px;
+    color: #0f0;
+
+    transition: 400ms ease-in-out;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #0f0;
+        color: black;
+    }
+}
+
 .prod-img-container {
     position: relative;
     border: 2px dashed grey;

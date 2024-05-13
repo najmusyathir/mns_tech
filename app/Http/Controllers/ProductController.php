@@ -42,10 +42,10 @@ class ProductController extends Controller
         if ($request->hasFile('prod_pic')) {
             $imageExtension = $request->file('prod_pic')->extension();
             $imageName = $productId . '.' . $imageExtension;
-            $request->file('prod_pic')->move(public_path('products/images'), $imageName);
+            $request->file('prod_pic')->move(public_path('products'), $imageName);
 
             // Update the product record with the correct image path
-            $product->prod_pic = 'products/images/' . $imageName;
+            $product->prod_pic = 'products/' . $imageName;
             $product->save();
         }
 

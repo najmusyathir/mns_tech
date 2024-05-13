@@ -8,17 +8,17 @@
 
             <div class="relative flex flex-col items-center justify-center">
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-
                     <div class="flex flex-wrap justify-center p-5" style="background: #000b; border-radius: 30px">
+
                         <div class="w-full">
                             <div class="bg-red-900 rounded-full p-2 w-fit">
-                                <a href="{{route('orders.index')}}" style="top: 0;left:0">
+                                <a href="{{route('order.index')}}" style="top: 0;left:0">
                                     <img src="{{asset('assets/icons/ic_left.svg')}}" style="height: 40px; width:auto">
                                 </a>
                             </div>
                         </div>
                         <h2 class="font-semibold text-4xl my-3 leading-tight" style="color: white; width:100%; z-index:10 !important;">
-                            Order Details: {{$order->order_id}}
+                            Order Details: {{$order->id}}
                         </h2>
                         <div style="width:60%">
                             <br>
@@ -54,44 +54,17 @@
                         </div>
 
                         <div class="text-white flex flex-col justify-center">
-                            Account: <br>
-
-                            <img src="{{asset('assets/images/qr.jpg')}}" style="height: 400px;">
+                            <div class="flex flex-col items-center">
+                                <img src="{{asset('assets/images/qr.jpeg')}}" style="min-width: 250px; width:300px">
+                                <p class="font-extrabold mt-3 mb-1 text-xl text-[#cd1f52]">Encik Muhammad Badrul Salam Bin Yah</p>
+                                <p class="text-lg">Bank Islam : <strong class="font-bold text-[#cd1f52]">03148020102026</strong></p>
+                            </div>
+                            <a href="{{route("payment.attempt", ['order_id' => $order->id])}}" class="btn">
+                                Make payment
+                            </a>
 
                         </div>
                     </div>
-
-                    <!-- Upload Receipt -->
-                    <div class="p-5 flex">
-                        <div class="px-10">
-                            <h3 class="text-white text-xl">
-                                Upload your receipt here:
-                            </h3>
-
-                            <form method="POST" action="{{route('order.update_payment',['order_id' => $order->order_id])}}" enctype="multipart/form-data">
-                                @csrf
-                                @method('POST')
-
-                                <div class="my-30 mx-auto flex flex-col " style="margin:10px; color: grey">
-
-                                    Product Image:
-                                    <label for='payment_evidence' class="prod-img-container">Upload
-                                        <div id="image-preview" class="my-30 mx-auto" style="margin:10px;">
-                                            <img id="preview" src="{{ asset($order->payment_evidence) }}" alt="Image Preview" style="display: none; max-width: 100px; max-height: 100px;">
-                                        </div>
-                                    </label>
-                                    <input type="file" id="payment_evidence" name="payment_evidence" accept="payments/*" onchange="previewImage(event)" style="padding:5px; margin:5px;">
-                                </div>
-
-                                <input type="submit" value="Add" class="btn">
-                            </form>
-                        </div>
-                        <div>
-                            <img src="{{ asset($order->payment_evidence) }}" style="height: 400px;">
-                     
-                        </div>
-                    </div>
-
                 </div>
 
                 <footer class="py-16 text-center text-sm text-white/70">
