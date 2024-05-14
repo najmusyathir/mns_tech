@@ -1,4 +1,36 @@
 <title>Order Details | MNS Tech</title>
+<style>
+    #shipping_status {
+        background: none;
+        border: #f00 solid 1px;
+
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="red" d="M12 15.5l-8-8 1.4-1.4L12 12.7l6.6-6.6 1.4 1.4z"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .shipping_status:focus {
+        outline: none;
+    }
+
+    option {
+        background-color: black;
+        padding: 10px;
+        margin: 10px;
+        color: red;
+
+        &hover {
+            cursor: pointer;
+            background: red;
+            color: white;
+
+        }
+    }
+</style>
 <x-app-layout style="background: #000;">
 
     <div class="pt-12" style="background: black">
@@ -29,9 +61,9 @@
                             @elseIf (Auth::user()->user_type === 'user')
                             <h2 class="font-semibold text-4xl my-3 leading-tight" style="color: white; width:100%; z-index:10 !important;">
                                 Payment for order: {{$order->id}}
-                               <p class="text-white">
-                     
-                               </p>
+                                <p class="text-white">
+
+                                </p>
                             </h2>
                             @endif
 
@@ -63,7 +95,9 @@
                                         <td class="whitespace-nowrap">Payment ID</td>
                                         <td>Status</td>
                                         <td>Resource</td>
-                                        <td></td>
+                                        @foreach ($payments as $transaction)
+                                        @if ($transaction['status'] != "Payment Accepted") <td></td> @endif
+                                        @endforeach
                                     </thead>
                                     <tbody>
                                         @foreach ($payments as $index => $transaction)
@@ -73,26 +107,33 @@
                                             <td>{{$transaction['status']}}</td>
                                             <td> <a href="{{ asset($transaction['payment_evidence']) }}" class="font-bold text-blue-500 underline" download>Download</a>
                                             </td>
+                                            @if ($transaction['status'] != "Payment Accepted")
                                             <td class="flex justify-center">
 
                                                 @if (Auth::user()->user_type === 'admin')
-                                                <form class="flex justify-center mr-3 ml-0 my-0" method="POST" action="{{ route('payment.update_status', ['id' => $transaction['id']]) }}">
+                                                <form class="flex justify-center mr-3 ml-0 my-0" id="acceptForm" method="POST" action="{{ route('payment.update_status', ['id' => $transaction['id']]) }}">
                                                     @csrf
                                                     <input type="hidden" name="new_status" value="Payment Accepted">
-                                                    <button class="green-btn m-0" type="submit">Accept</button>
+                                                    <input type="hidden" name="shipping_status" value="Order Preparing">
+                                                    <button class="green-btn m-0" type="button" onclick="confirmAccept()">Accept</button>
                                                 </form>
+
+                                                @if ($transaction['status'] != "Payment Accepted")
 
                                                 <form class="mr-3 ml-0 my-0 flex justify-center" method="POST" action="{{ route('payment.update_status', ['id' => $transaction['id']]) }}">
                                                     @csrf
                                                     <input type="hidden" name="new_status" value="Payment Rejected">
+                                                    <input type="hidden" name="shipping_status" value="Order Processing">
                                                     <button class="btn m-0" type="submit">Reject</button>
                                                 </form>
+
                                                 <form class="m-0 flex justify-center" method="POST" action="{{ route('payment.delete', ['payment_id' => $transaction['id']]) }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <input type="hidden" name="order_id" value="{{$transaction->order_id}}">
                                                     <button class="btn m-0" type="submit">Delete</button>
                                                 </form>
+                                                @endif
 
                                                 @elseIf (Auth::user()->user_type === 'user')
                                                 <form class="m-0 flex justify-center" method="POST" action="{{ route('payment.delete', ['payment_id' => $transaction['id']]) }}">
@@ -105,6 +146,8 @@
                                                 @endif
 
                                             </td>
+                                            @endif
+
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -113,6 +156,41 @@
                         </div>
 
                         @if (Auth::user()->user_type === 'user')
+
+                        @if ($order->status == 'Payment Accepted')
+                        <div class="text-white flex flex-col justify-center">
+                            <div class="flex flex-col items-center">
+                                <div style="border: solid red 3px; border-radius: 50%; padding:10px; ">
+                                    <img src="{{asset('assets/icons/ic_truck_red.svg')}}" style="width:100px; margin-left:6px; margin-top:6px;">
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col mt-4 text-center" style="width:200px">
+
+                                @foreach ($shipping as $ship)
+                                <p for="shipping_status" class="text-red-500 font-semibold text-2xl">Shipment Status:</p>
+                                <p class="text-red-500 btn text-nowrap w-full mx-0 my-2 font-semibold">{{$ship->status}}</p>
+
+                                @if ($ship->status == 'Order Shipped' || $ship->status == 'Order Delivered')
+                                <p class="text-red-500 text-xl font-semibold">Tracking number:<br>
+                                    DHL - {{$ship->tracking_no}}
+                                </p>
+                                @if ( $ship->status == 'Order Shipped')
+                                <form method="POST" class="flex flex-col items-center" action="{{route('shipping.update_tracking', ['id'=>$ship->order_id])}}" class="w-full flex flex-col justify-center text-center" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('POST')
+                                    <p class="text-red-500">Tracking number: </p>
+                                    <input type="hidden" value="{{$ship->tracking_no}}" name="tracking_no" class="bg-black text-white">
+                                    <input type="hidden" name="status" value="Order Delivered " class="bg-black text-white">
+                                    <input type="submit" value="Item received" class="w-fit btn m-0 mt-3">
+                                </form>
+                                @endif
+                                @endif
+                                @endforeach
+                            </div>
+                        </div>
+
+                        @else
                         <div class="text-white flex flex-col justify-center">
                             <div class="flex flex-col items-center">
                                 <img src="{{asset('assets/images/qr.jpeg')}}" style="min-width: 250px; width:300px">
@@ -135,13 +213,44 @@
                                         <input type="hidden" name="order_id" value="{{$order->id}}">
 
                                     </div>
-
                                 </form>
+                            </div>
+                        </div>
+                        @endif
 
-
+                        @else
+                        <div class="text-white flex flex-col justify-center">
+                            <div class="flex flex-col items-center">
+                                <div style="border: solid red 3px; border-radius: 50%; padding:10px; ">
+                                    <img src="{{asset('assets/icons/ic_truck_red.svg')}}" style="width:100px; margin-left:6px; margin-top:6px;">
+                                </div>
                             </div>
 
+                            <div class="flex mt-4 flex-col text-center" style="width:200px">
 
+                                @foreach ($shipping as $ship)
+                                <p for="shipping_status" class="text-red-500 font-semibold text-2xl">Shipment Status:</p>
+                                <p class="text-red-500 btn text-nowrap w-full mx-0 my-3 font-semibold">{{$ship->status}}</p>
+
+                                @if ($ship->status == 'Order Preparing')
+                                <form method="POST" action="{{route('shipping.update_tracking', ['id'=>$ship->order_id])}}" class="w-full flex flex-col justify-center text-center" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('POST')
+                                    <p class="text-red-500">Tracking number: </p>
+                                    <input type="text" name="tracking_no" class="bg-black text-white" required>
+                                    <input type="hidden" name="status" value="Order Shipped " class="bg-black text-white">
+                                    <input type="submit" value="Update" class="w-fit btn m-0 mt-3">
+                                </form>
+                                @endif
+
+                                @if ($ship->status == 'Order Shipped' || $ship->status == 'Order Delivered')
+                                <p class="text-red-500 text-xl font-semibold">Tracking number:<br>
+                                    DHL - {{$ship->tracking_no}}
+
+                                </p>
+                                @endif
+                                @endforeach
+                            </div>
                         </div>
                         @endif
 
@@ -157,8 +266,13 @@
                 </footer>
             </div>
 
-
         </div>
     </div>
-    </div>
+    <script>
+        function confirmAccept() {
+            if (confirm('Are you sure you want to accept?')) {
+                document.getElementById('acceptForm').submit();
+            }
+        }
+    </script>
 </x-app-layout>

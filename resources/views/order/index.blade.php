@@ -21,34 +21,45 @@
 
                     <div class="flex flex-col py-3" id="scrollable-div" style="min-height:60vh; overflow-y:scroll;">
                         @foreach ($orders as $order)
-
                         @if (Auth::user()->user_type === 'admin')
-                        <a href="{{route('payment.attempt', ['order_id' => $order->id])}}" class="justify-between flex my-2 p-3 h-fit w-full" style="border: red 2px solid; border-radius:20px; background: #222a;">
-
-                        @elseif (Auth::user()->user_type === 'user')
-                            <a href="{{route('order.details', ['order_id' => $order->id])}}" class="justify-between flex my-2 p-3 h-fit w-full" style="border: red 2px solid; border-radius:20px; background: #222a;">
-                        @endif
+                        <a href="{{ route('payment.attempt', ['order_id' => $order->id]) }}" class="justify-between flex my-2 p-3 h-fit w-full" style="border: red 2px solid; border-radius:20px; background: #222a;">
+                            @elseif (Auth::user()->user_type === 'user')
+                            <a href="{{ route('order.details', ['order_id' => $order->id]) }}" class="justify-between flex my-2 p-3 h-fit w-full" style="border: red 2px solid; border-radius:20px; background: #222a;">
+                                @endif
                                 <div class="flex-col">
-
                                     <div class="flex">
                                         <p class="mr-3"><strong>User ID:</strong> {{ $order->user_id }}</p>
                                         <p><strong>Order ID:</strong> {{ $order->id }}</p>
                                     </div>
                                     <div class="flex">
-                                        <strong>Total Price:</strong class='m-3'> ${{ number_format($order->total_price, 2) }}
+                                        <strong>Total Price:</strong> ${{ number_format($order->total_price, 2) }}
                                         <p>
                                             <strong class="m-3">Created At:</strong> {{ $order->created_at }}
                                             <strong class="m-3">Updated At:</strong> {{ $order->updated_at }}
                                         </p>
                                     </div>
                                 </div>
+                                @php
+                                // Find the corresponding shipping for this order
+                                $shipping = $shippings->firstWhere('order_id', $order->id);
+                                @endphp
+                                @if ($shipping)
                                 <p class="flex text-2xl font-extrabold items-center text-red-500">
-                                    {{ $order->status }}
+                                    @if ($order->status == "Payment Rejected" ||$order->status == "Payment Pending" || $order->status == "Order Cancelled")
+                                    {{$order->status}}
+
+                                    @else
+                                    {{ $shipping->status }}
+                                    @endif
                                 </p>
+                                @else
+                                <p class="flex text-2xl font-extrabold items-center text-red-500">
+                                    No Shipping Information
+                                </p>
+                                @endif
                             </a>
                             <hr>
                             @endforeach
-
                     </div>
 
                     <footer class="py-16 text-center text-sm text-black dark:text-white/70">

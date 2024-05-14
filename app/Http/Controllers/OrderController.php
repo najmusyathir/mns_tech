@@ -8,77 +8,74 @@ use App\Models\Order;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\OrderItem;
+use App\Models\Shipping;
+use App\Http\Controllers\ShippingController;
 
 class OrderController extends Controller
 {
     public function index()
     {
         $userType = auth()->user()->user_type;
-    
+
         if ($userType === 'user') {
             $userId = auth()->id();
             $orders = Order::where("user_id", $userId)->get();
+
+            $orderIds = $orders->pluck('id');
+            $shippings = Shipping::whereIn("order_id", $orderIds)->get();
         } else if ($userType === 'admin') {
-            $orders = Order::get();
+            $orders = Order::all();
+            $shippings = Shipping::get();
         } else {
             abort(404);
         }
-    
-        return view("order.index", compact("orders"));
+        return view("order.index", compact("orders", "shippings"));
     }
-
-    public function adminIndex($status = null)
-{
-    $query = Order::query();
-
-    if ($status) {
-        $query->where('status', $status);
-    }
-
-    $orders = $query->get();
-
-    return response()->json($orders);
-}
 
     public function create(Request $request)
     {
         $userId = auth()->id();
-    
+
         $order = new Order();
         $order->user_id = $userId;
         $order->total_price = $request->input('total_price');
         $order->status = $request->input('status');
+
         $order->save();
-    
+
         // Get the order ID
         $orderId = $order->id;
-    
+
         // Get all cart items for the user
         $cartItems = Cart::where("user_id", $userId)->get();
-    
+
         // Loop through cart items and create order_items
         foreach ($cartItems as $cartItem) {
             $prod = Product::where("id", $cartItem->product_id)->first();
-    
+
             $orderItem = new OrderItem();
             $orderItem->order_id = $orderId;
             $orderItem->product_id = $cartItem->product_id;
             $orderItem->prod_title = $prod->prod_title;
             $orderItem->quantity = $cartItem->quantity;
             $orderItem->price_per_item = $prod->prod_price;
-            $orderId = $order->id; 
+            $orderId = $order->id;
             $orderItem->save();
         }
-    
+
         // Get all information for user and order_items
         $user = User::find($userId);
-    
+
         // Delete all cart items for the user
         Cart::where("user_id", $userId)->delete();
-    
+
         // Fetch order_items for the current order
         $orderItems = OrderItem::where('order_id', $orderId)->get();
-    
+
+        // Create shipping record
+        $shippingController = new ShippingController();
+        $shippingController->create($orderId);
+
         // Show page order created
         return view('order.successCreate', [
             'order' => $order,
@@ -101,6 +98,14 @@ class OrderController extends Controller
         ]);
     }
 
+    public function order_cancel($order_id){
+        $order = Order::findOrFail($order_id);
+        $order->status = 'Order Cancelled';
+        $order->save();
+
+        return redirect()->back();
+    }
+
     public function create_invoice($order_id)
     {
         $user_id = auth()->id();
@@ -114,5 +119,4 @@ class OrderController extends Controller
             'user' => $user
         ]);
     }
-    
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\OrderItem;
+use App\Models\Shipping;
 
 class PaymentController extends Controller
 {
@@ -14,12 +15,14 @@ class PaymentController extends Controller
         $order = Order::findOrFail($order_id);
         $order_items = OrderItem::where('order_id', $order_id)->get();
         $payment = Payment::where('order_id', $order_id)->get();
+        $shipping = Shipping::where('order_id', $order_id)->get();
 
 
         return view('payment.payment_page', [
             'order' => $order,
             'order_items' => $order_items,
             'payments' => $payment,
+            'shipping' => $shipping,
         ]);
     }
 
@@ -77,6 +80,10 @@ class PaymentController extends Controller
         $order = Order::findOrFail($payment->order_id);
         $order->status = $request->input('new_status');
         $order->save();
+
+        $shipping = Shipping::where('order_id', $payment->order_id)->firstOrFail();
+        $shipping->status = $request->input('shipping_status');
+        $shipping->save();
 
         return redirect()->back()->with('success', 'Payment' . $payment->status);
     }

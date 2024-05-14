@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ShippingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -55,10 +56,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/order', [OrderController::class, 'index'])->name('order.index');
     Route::post('order/create', [OrderController::class, 'create'])->name('order.create');
     Route::get('/order/details/{order_id}', [OrderController::class, 'order_details'])->name('order.details');
+    Route::post('order/cancel/{order_id}', [OrderController::class, 'order_cancel'])->name('order.cancel');
     Route::get('order/payment/{order_id}/invoice', [OrderController::class, 'create_invoice'])->name('order.invoice');
-    
-    //admin
-    Route::get('/orders/{status?}', [OrderController::class, 'adminIndex'])->name('order.admin_index');
+
 }
 
 //Payment Related Route
@@ -69,6 +69,11 @@ Route::middleware('auth')->group(function () {
 
     //admin
     Route::post('/order/payment/{id}/update_status', [PaymentController::class, 'update_status'])->name('payment.update_status');
+}
+
+//Shipping Related Route
+{
+    Route::post('/order/{id}/update_shipment', [ShippingController::class, 'update_tracking'])->name('shipping.update_tracking');
 }
 
 

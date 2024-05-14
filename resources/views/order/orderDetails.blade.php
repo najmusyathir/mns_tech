@@ -58,6 +58,24 @@
                                 </table>
                                 <h3 class="text-3xl text-red-600 font-extrabold">RM {{$order->total_price}}</h3>
                             </div>
+                            @if ($order->status == "Payment Accepted")
+                            <div class="w-full flex justify-center">
+
+                                <a href="{{route("payment.attempt", ['order_id' => $order->id])}}" class="btn">
+                                    Check Shipping
+                                </a>
+                            </div>
+                            @else
+
+                            <form class="flex justify-center mr-3 ml-0 my-0" method="POST" action="{{route("order.cancel", ['order_id' => $order->id])}}">
+                                @csrf
+                                <input type="hidden" name="new_status" value="Payment Accepted">
+                                <input type="hidden" name="shipping_status" value="Order Preparing">
+                                <input class="btn m-0" value="Cancel Order" type="submit">
+                            </form>
+
+
+                            @endif
                         </div>
 
                         <div class="text-white flex flex-col justify-center">
@@ -68,12 +86,13 @@
                             </div>
 
                             @if ($order->status != "Payment Accepted")
-
+                            @if ($order->status != "Order Cancelled")
                             <a href="{{route("payment.attempt", ['order_id' => $order->id])}}" class="btn">
                                 Make payment
                             </a>
-
+                            @endif
                             @else
+
                             @if ($user->address == null || $user->phone_no == null )
                             <h2 style="font-weight: 800 !important; text-align:center;" class="btn m-3">Please UPDATE your details first</h2>
 
