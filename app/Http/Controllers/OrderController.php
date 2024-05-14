@@ -79,8 +79,8 @@ class OrderController extends Controller
         // Fetch order_items for the current order
         $orderItems = OrderItem::where('order_id', $orderId)->get();
     
-        // Redirect to the invoice with the order
-        return view('order.invoice', [
+        // Show page order created
+        return view('order.successCreate', [
             'order' => $order,
             'user' => $user,
             'orderItems' => json_encode($orderItems),
@@ -101,30 +101,18 @@ class OrderController extends Controller
         ]);
     }
 
-    public function update_payment(Request $request, $order_id)
+    public function create_invoice($order_id)
     {
-                  
-        if ($request->hasFile('payment_evidence')) {            
-            $imageExtension = $request->file('payment_evidence')->extension();
-    
-            $imageName = 'payment_' . $order_id . '.' . $imageExtension;
-            $request->file('payment_evidence')->move(public_path('payments'), $imageName);
-    
-            //toubleshoot
-            $orderitems = OrderItem::where('order_id', $order_id)->get();
-            $user_id = auth()->id();
-            $user = User::findOrFail($user_id);
-     
-            $order = Order::where("order_id", $order_id)->firstOrFail();
-            $order->payment_evidence = 'payments/' . $imageName;
-            $order->save();
-    
-            return view('order.orderDetails2', [
-                'order' => $order,
-                'orderItems' => $orderitems,
-                'user' => $user               
-            ]);
-        } 
+        $user_id = auth()->id();
+        $user = User::findOrFail($user_id);
+        $order = Order::findOrFail($order_id);
+        $orderitems = OrderItem::where('order_id', $order_id)->get();
+
+        return view('order.invoice', [
+            'order' => $order,
+            'order_items' => $orderitems,
+            'user' => $user
+        ]);
     }
     
 }

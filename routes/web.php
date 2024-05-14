@@ -55,7 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/order', [OrderController::class, 'index'])->name('order.index');
     Route::post('order/create', [OrderController::class, 'create'])->name('order.create');
     Route::get('/order/details/{order_id}', [OrderController::class, 'order_details'])->name('order.details');
-
+    Route::get('order/payment/{order_id}/invoice', [OrderController::class, 'create_invoice'])->name('order.invoice');
+    
     //admin
     Route::get('/orders/{status?}', [OrderController::class, 'adminIndex'])->name('order.admin_index');
 }

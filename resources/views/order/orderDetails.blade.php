@@ -27,11 +27,18 @@
                                     Status:
                                 </strong> {{$order->status}}
                             </p>
+
                             <div class="flex flex-col flex-wrap text-white mx-10">
-                                <p>
-                                    Name: {{$user->name}}<br>
-                                    Email: {{$user->email}}
-                                </p>
+                                @if ($order->status == 'Payment Accepted')
+
+                                @if ($user->address == null || $user->phone_no == null )
+                                <h2 class="text-red-500 texl-2xl m-2">
+                                    To ensure timely delivery, please <strong style="font-weight: 800 !important"> UPDATE </strong> your phone number and address at your earliest convenience.
+
+                                </h2>
+                                @endif
+
+                                @endif
 
                                 <table class="order-table my-3">
                                     <thead>
@@ -59,9 +66,23 @@
                                 <p class="font-extrabold mt-3 mb-1 text-xl text-[#cd1f52]">Encik Muhammad Badrul Salam Bin Yah</p>
                                 <p class="text-lg">Bank Islam : <strong class="font-bold text-[#cd1f52]">03148020102026</strong></p>
                             </div>
+
+                            @if ($order->status != "Payment Accepted")
+
                             <a href="{{route("payment.attempt", ['order_id' => $order->id])}}" class="btn">
                                 Make payment
                             </a>
+
+                            @else
+                            @if ($user->address == null || $user->phone_no == null )
+                            <h2 style="font-weight: 800 !important; text-align:center;" class="btn m-3">Please UPDATE your details first</h2>
+
+                            @else
+                            <a href="{{route("order.invoice", ['order_id' => $order->id])}}" class="btn">
+                                Print Receipt
+                            </a>
+                            @endif
+                            @endif
 
                         </div>
                     </div>
