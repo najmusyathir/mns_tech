@@ -77,7 +77,7 @@ class OrderController extends Controller
         $shippingController->create($orderId);
 
         // Show page order created
-        return view('order.successCreate', [
+        return view('order.post_create', [
             'order' => $order,
             'user' => $user,
             'orderItems' => json_encode($orderItems),

@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\OrderItem;
 use App\Models\Shipping;
+use App\Models\User;
 
 class PaymentController extends Controller
 {
@@ -16,9 +17,11 @@ class PaymentController extends Controller
         $order_items = OrderItem::where('order_id', $order_id)->get();
         $payment = Payment::where('order_id', $order_id)->get();
         $shipping = Shipping::where('order_id', $order_id)->get();
+        $user = User::where('id', $order->user_id)->first();
 
 
         return view('payment.payment_page', [
+            'user' => $user,
             'order' => $order,
             'order_items' => $order_items,
             'payments' => $payment,
@@ -43,7 +46,7 @@ class PaymentController extends Controller
             $request->file('payment_evidence')->move(public_path('payments'), $imageName);
             $payment->payment_evidence = $imageName;
             $payment->save();
-            
+
 
             $this->updateOrderStatus($request->input('order_id'));
 
@@ -89,12 +92,12 @@ class PaymentController extends Controller
     }
 
     public function updateOrderStatus($order_id)
-{
-    $paymentCount = Payment::where('order_id', $order_id)->count();
+    {
+        $paymentCount = Payment::where('order_id', $order_id)->count();
 
-    $order = Order::findOrFail($order_id);
-    $order->status = $paymentCount > 0 ? 'Pending Review' : 'Payment Pending';
-    $order->save();
-}
+        $order = Order::findOrFail($order_id);
+        $order->status = $paymentCount > 0 ? 'Pending Review' : 'Payment Pending';
+        $order->save();
+    }
 
 }
