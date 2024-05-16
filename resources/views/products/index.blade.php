@@ -157,7 +157,7 @@
 
                             @else
 
-                            <form method="POST" action="{{ route('cart.addItem') }}" class="btn abs-rgt-btm">
+                            <form method="POST" action="{{ route('cart.addItem') }}" class="btn abs-rgt-btm m-3">
                                 @csrf
                                 <input type='hidden' name="user_id" value="{{ auth()->user()->id }}">
                                 <input type='hidden' name="product_id" value="{{$product->id}}">

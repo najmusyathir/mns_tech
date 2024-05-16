@@ -1,76 +1,110 @@
+<style>
+    .card {
+        background: none !important;
+        margin:20px;
+        padding: 80px 0;
+        border: 1px #fff5 solid !important;
+        border-radius: 15px;
+        transition: 400ms;
+        justify-content: end;
+    }
+
+    .card:hover {
+        cursor: pointer;
+        scale: 1.01;
+        border: 1px solid red !important;
+    }
+</style>
+
 <x-app-layout style="background: #000;">
+    <div class=" bg-black text-white/50">
+        <img id="background" class="absolute -left-20 top-0 max-w-[877px]"
+            src="{{ asset('assets/images/setup.jpg') }}" />
+        <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
+            <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
 
-    <div class="py-2 min-h-screen" style="background: black">
-        <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="{{asset('assets/images/setup.jpg')}}" alt="background_pic" />
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-                <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
-                    <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                        <h2 class="font-semibold text-4xl my-10 leading-tight" style="color: white; z-index:10 !important;">
-                            {{ __('Dashboard') }}
-                        </h2>
-
-                        <main class="mt-6">
-                            <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-                                <a id="docs-card" class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-black p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-white/70 hover:ring-black/20 focus:outline-none md:row-span-3 lg:p-10 lg:pb-10  cursor-pointer">
-                                    <img src="https://i.ytimg.com/vi/EA0YC9m6D4s/maxresdefault.jpg" alt="Laravel documentation screenshot" class="hidden aspect-video h-full w-full flex-1 rounded-[10px] object-top object-cover drop-shadow-[0px_4px_34px_rgba(0,0,0,0.25)] dark:block" />
-
-                                    <div class="relative flex items-center gap-6 lg:items-end">
-                                        <div id="docs-card-content" class="flex items-start gap-6 lg:flex-col">
-                                            <div class="flex justify-between items-center">
-
-                                                <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                                    <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                        <path fill="#FF2D20" d="M23 4a1 1 0 0 0-1.447-.894L12.224 7.77a.5.5 0 0 1-.448 0L2.447 3.106A1 1 0 0 0 1 4v13.382a1.99 1.99 0 0 0 1.105 1.79l9.448 4.728c.14.065.293.1.447.1.154-.005.306-.04.447-.105l9.453-4.724a1.99 1.99 0 0 0 1.1-1.789V4ZM3 6.023a.25.25 0 0 1 .362-.223l7.5 3.75a.251.251 0 0 1 .138.223v11.2a.25.25 0 0 1-.362.224l-7.5-3.75a.25.25 0 0 1-.138-.22V6.023Zm18 11.2a.25.25 0 0 1-.138.224l-7.5 3.75a.249.249 0 0 1-.329-.099.249.249 0 0 1-.033-.12V9.772a.251.251 0 0 1 .138-.224l7.5-3.75a.25.25 0 0 1 .362.224v11.2Z" />
-                                                        <path fill="#FF2D20" d="m3.55 1.893 8 4.048a1.008 1.008 0 0 0 .9 0l8-4.048a1 1 0 0 0-.9-1.785l-7.322 3.706a.506.506 0 0 1-.452 0L4.454.108a1 1 0 0 0-.9 1.785H3.55Z" />
-                                                    </svg>
-                                                </div>
-
-                                                <h2 class="ml-5 text-2xl font-bold text-red-600 pt-4 mt-4" style="height: fit-content;">Welcome to MNS Tech Store</h2>
-                                            </div>
-
-                                            <div class="pt-3 sm:pt-5 lg:pt-0">
-                                                <p class="mt-4 text-l text-sm/relaxed ">
-                                                    Welcome to MNS Tech Store, your one-stop shop for all things PC! Whether you're a hardcore gamer, a digital artist, or a professional in need of powerful computing solutions, we've got you covered. Explore our wide range of products, from cutting-edge gaming rigs to high-performance workstations, and discover the perfect PC for your needs. With top brands, expert advice, and unbeatable prices, MNS Tech Store is the ultimate destination for all your PC shopping needs.
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <svg class="size-6 shrink-0 stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                                        </svg>
-                                    </div>
-                                </a>
-
-                                <a href="{{ route('products.index') }}" class="flex flex-col m-3 p-3 :hover" style="border: solid red 1px;border-radius:15px; background:#151515">
-                                    <div class="relative flex items-center gap-6 lg:items-end" style="display:flex; justify-content: space-between; align-items:center;  width:100%;">
-                                        <div id="docs-card-content" class="flex w-full justify-between items-center gap-6">
-
-                                            <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                                <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                    <path fill="#FF2D20" d="M23 4a1 1 0 0 0-1.447-.894L12.224 7.77a.5.5 0 0 1-.448 0L2.447 3.106A1 1 0 0 0 1 4v13.382a1.99 1.99 0 0 0 1.105 1.79l9.448 4.728c.14.065.293.1.447.1.154-.005.306-.04.447-.105l9.453-4.724a1.99 1.99 0 0 0 1.1-1.789V4ZM3 6.023a.25.25 0 0 1 .362-.223l7.5 3.75a.251.251 0 0 1 .138.223v11.2a.25.25 0 0 1-.362.224l-7.5-3.75a.25.25 0 0 1-.138-.22V6.023Zm18 11.2a.25.25 0 0 1-.138.224l-7.5 3.75a.249.249 0 0 1-.329-.099.249.249 0 0 1-.033-.12V9.772a.251.251 0 0 1 .138-.224l7.5-3.75a.25.25 0 0 1 .362.224v11.2Z" />
-                                                    <path fill="#FF2D20" d="m3.55 1.893 8 4.048a1.008 1.008 0 0 0 .9 0l8-4.048a1 1 0 0 0-.9-1.785l-7.322 3.706a.506.506 0 0 1-.452 0L4.454.108a1 1 0 0 0-.9 1.785H3.55Z" />
-                                                </svg>
-                                            </div>
-                                            <h2 class="text-xl font-semibold text-red-600">List of Products</h2>
-                                            <svg class="size-6 shrink-0 stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </a>
+                <main class="mt-6">
+                    <div class="flex flex-col">
+                        <a
+                            class="flex flex-col relative items-center justify-center overflow-hidden rounded-lg shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none md:row-span-3 bg-zinc-900 ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 focus-visible:ring-[#FF2D20]">
+                            <div id="screenshot-container" class="relative flex w-full flex-1 items-stretch">
+                                <img src="https://i.ytimg.com/vi/EA0YC9m6D4s/maxresdefault.jpg"
+                                    alt="Laravel documentation screenshot"
+                                    class="hidden aspect-video h-full w-full flex-1 rounded-[10px] object-top object-cover drop-shadow-[0px_4px_34px_rgba(0,0,0,0.25)] dark:block" />
                             </div>
-                        </main>
 
+                            <div class="absolute h-full w-full mx-10 bg-black bg-opacity-50">
+                                <div class="relative w-full h-full flex items-center justify-center">
+                                    <div class="flex items-start ">
+                                        <div class="flex justify-between items-center">
+                                            <h2 class="ml-5 text-5xl font-bold text-white" style="height: fit-content;">
+                                                Welcome to <p class="text-red-600">
+                                                    MNS Tech Store
+                                                </p>
+                                            </h2>
+                                        </div>
+                                    </div>
 
+                                    <div
+                                        class="absolute bottom-0 mt-10 py-5 w-full bg-black bg-opacity-70 flex justify-center items-center">
+                                        <p class="text-l text-lg text-gray-400" style="width: 80%; text-align:justify">
+                                            Welcome to MNS Tech Store, your one-stop shop for all things PC! Whether
+                                            you're a hardcore gamer, a digital artist, or a professional in need of
+                                            powerful computing solutions, we've got you covered. Explore our wide range
+                                            of products, from cutting-edge gaming rigs to high-performance workstations,
+                                            and discover the perfect PC for your needs. With top brands, expert advice,
+                                            and unbeatable prices, MNS Tech Store is the ultimate destination for all
+                                            your PC shopping needs.
+                                        </p>
+                                    </div>
+                                </div>
 
-                        <footer class="py-16 text-center text-sm text-black dark:text-white/70">
-                            Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-                        </footer>
+                            </div>
+                        </a>
                     </div>
 
-                </div>
+                    <div class="flex flex-wrap text-gray-300 my-32 justify-center items center">
+
+                        <div class="flex flex-col ring-white/50 mx-3 px-4 card" style="width: 27%;min-width: 300px">
+                            <img src="{{asset('assets/icons/ic_pc.svg')}}" style="width: 20%;">
+                            <h2 class="text-3xl text-red-600 my-3 font-bold">Custom Desktop Build</h2>
+                            <p class="text-white text-justify" style="width:25ch max-w-full">Tailor dekstop configuration based on
+                                individuals needs, ensuring optimal performance for various purposes.</p>
+                        </div>
+                        <div class="flex flex-col ring-white/50 mx-3 px-4 card" style="width: 27%;min-width: 300px">
+                            <img src="{{asset('assets/icons/ic_person_expert.svg')}}" style="width: 20%;">
+                            <h2 class="text-3xl text-red-600 my-3 font-bold">Custom Configuration</h2>
+                            <p class="text-white text-justify" style="width:25ch max-w-full">Build your dream laptop with our
+                                customaizable configurations, ensuring you get the performance and your favourite
+                                feature</p>
+                        </div>
+                        <div class="flex flex-col ring-white/50 mx-3 px-4 card" style="width: 27%;min-width: 300px">
+                            <img src="{{asset('assets/icons/ic_phone.svg')}}" style="width: 18%; margin:0 0 17px 0">
+                            <h2 class="text-3xl text-red-600 my-3 font-bold">Latest Device & Accessories</h2>
+                            <p class="text-white text-justify" style="width:25ch max-w-full">Explore a curated selection of latest
+                                smartphones and gadget. Receive recommandation from our professional staffs</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap justify-end items-center" style="background: #151517">
+                        <div class="p-10">
+                            <h2 class="text-3xl text-red-600 font-bold">We offer Customized device according to Your
+                                Needs</h2>
+                            <p style="max-width: 60ch; padding:30px 0 50px 0">Tailoring technology to fit your needs -
+                                Delivering customized devices for a personalized digital experience</p>
+                            <a href="" class='btn my-5'>Contact Us Now</a>
+                        </div>
+                        <img src="{{asset('assets/images/pc_custom.jpg')}}" style='max-height: 300px'>
+                    </div>
+                </main>
+
+
+                <footer class="py-16 text-center text-sm text-gray-400">
+                    © 2024 MNS Tech. All rights reserved.
+
+                </footer>
             </div>
+
         </div>
     </div>
 </x-app-layout>
