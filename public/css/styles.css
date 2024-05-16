@@ -118,6 +118,18 @@ textarea {
     padding: 0;
 }
 
+.default-nav{
+    >*{
+        color: #999 !important;
+        font-weight: 600;
+        transition: 300ms
+    }
+
+    >*:hover{
+        color: white !important;
+    }
+}
+
 .order-table {
     table,
     td,

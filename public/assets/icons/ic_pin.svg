@@ -1,0 +1,28 @@
+<svg id='map-pin_24' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'
+    xmlns:xlink='http://www.w3.org/1999/xlink'>
+    <rect width='24' height='24' stroke='none' fill='#000000' opacity='0' />
+
+
+    <g transform="matrix(1 0 0 1 12 12)">
+        <g style="">
+            <g transform="matrix(1 0 0 1 0 0)">
+                <path
+                    style="stroke: none; stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;"
+                    transform=" translate(-12, -12)" d="M 0 0 L 24 0 L 24 24 L 0 24 z"
+                    stroke-linecap="round" />
+            </g>
+            <g transform="matrix(1 0 0 1 -0.25 -1.25)">
+                <circle
+                    style="stroke: #f00; stroke-width: 1.5; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;"
+                    cx="0" cy="0" r="3" />
+            </g>
+            <g transform="matrix(1 0 0 1 -0.25 -0.01)">
+                <path
+                    style="stroke: #f00; stroke-width: 1.5; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;"
+                    transform=" translate(-12, -12.24)"
+                    d="M 17.657 16.657 L 13.414 20.9 C 12.633114934768514 21.680097646814314 11.367885065231485 21.680097646814314 10.587 20.9 L 6.343 16.656999999999996 C 3.218924109366008 13.532763117682109 3.219011115499651 8.467518226808854 6.343194334844699 5.343388671358445 C 9.467377554189747 2.219259115908036 14.532622445810256 2.2192591159080344 17.656805665155304 5.343388671358447 C 20.780988884500353 8.46751822680886 20.78107589063399 13.532763117682114 17.656999999999996 16.657 z"
+                    stroke-linecap="round" />
+            </g>
+        </g>
+    </g>
+</svg>

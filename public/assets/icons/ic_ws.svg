@@ -1,0 +1,30 @@
+<svg id='brand-whatsapp_24' width='24' height='24' viewBox='0 0 24 24'
+    xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
+    <rect width='24' height='24' stroke='none' fill='#000000' opacity='0' />
+
+
+    <g transform="matrix(1 0 0 1 12 12)">
+        <g style="">
+            <g transform="matrix(1 0 0 1 0 0)">
+                <path
+                    style="stroke: none; stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;"
+                    transform=" translate(-12, -12)" d="M 0 0 L 24 0 L 24 24 L 0 24 z"
+                    stroke-linecap="round" />
+            </g>
+            <g transform="matrix(1 0 0 1 -0.25 -0.23)">
+                <path
+                    style="stroke: #f00; stroke-width: 1.5; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;"
+                    transform=" translate(-12, -12.02)"
+                    d="M 3 21 L 4.65 17.2 C 2.0381818158906353 13.492413160185517 2.593034815078265 8.420691683381 5.944707825753744 5.3655186226331395 C 9.296380836429222 2.3103455618852795 14.397670328140231 2.2262854004141186 17.84818394649855 5.169370545484448 C 21.298697564856873 8.112455690554777 22.020349818971965 13.163142635230551 19.532105313497755 16.95476942100302 C 17.043860808023545 20.746396206775493 12.123151715627758 22.094299251137755 8.05000000000001 20.1 L 3.000000000000001 20.999999999999996"
+                    stroke-linecap="round" />
+            </g>
+            <g transform="matrix(1 0 0 1 0 -0.5)">
+                <path
+                    style="stroke: #f00; stroke-width: 1.5; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;"
+                    transform=" translate(-12.25, -11.75)"
+                    d="M 9 10 C 9 10.276142374915397 9.223857625084603 10.5 9.5 10.5 C 9.776142374915397 10.5 10 10.276142374915397 10 10 L 10 9 C 10 8.723857625084603 9.776142374915397 8.5 9.5 8.5 C 9.223857625084603 8.5 9 8.723857625084603 9 9 L 9 10 C 9 12.761423749153966 11.238576250846034 15 14 15 L 15 15 C 15.276142374915397 15 15.5 14.776142374915397 15.5 14.5 C 15.5 14.223857625084603 15.276142374915397 14 15 14 L 14 14 C 13.723857625084603 14 13.5 14.223857625084603 13.5 14.5 C 13.5 14.776142374915397 13.723857625084603 15 14 15"
+                    stroke-linecap="round" />
+            </g>
+        </g>
+    </g>
+</svg>

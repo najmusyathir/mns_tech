@@ -7,12 +7,12 @@
     .nav-button:hover {
         color: white !important;
         font-weight: 600;
-
     }
 </style>
+
 <nav x-data="{ open: false }" class="bg-black border-b border-gray-900">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style=" z-index:20; position: relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style="z-index:20; position: relative">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -24,19 +24,31 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex text-red-50">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="nav-button">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('homes')" :active="request()->routeIs('homes')" class="nav-button">
+                        Home
+                    </x-nav-link>
+                    <x-nav-link :href="route('about')" :active="request()->routeIs('about')" class="nav-button">
+                        About
+                    </x-nav-link>
+                    <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')" class="nav-button">
+                        Contact
+                    </x-nav-link>
+                    <x-nav-link :href="route('faqs')" :active="request()->routeIs('faqs')" class="nav-button">
+                        FAQs
                     </x-nav-link>
 
-                    <x-nav-link :href="route('products.index')" :active="request()->routeIs('product_list')" class="nav-button">
-                        Product List
-                    </x-nav-link>
-                    @if (Auth::user()->user_type === 'admin')
-                    <x-nav-link :href="route('order.index')" :active="request()->routeIs('product_list')" class="nav-button">
-                        Orders
-                    </x-nav-link>
+                    @if (Auth::check())
+                        @if (Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'user')
+                            <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')" class="nav-button">
+                                Product List
+                            </x-nav-link>
+                            @if (Auth::user()->user_type === 'admin')
+                                <x-nav-link :href="route('order.index')" :active="request()->routeIs('order.index')" class="nav-button">
+                                    Orders
+                                </x-nav-link>
+                            @endif
+                        @endif
                     @endif
-
 
                 </div>
             </div>
@@ -46,7 +58,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div>{{ Auth::check() ? Auth::user()->name : 'Guest' }}</div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -57,25 +69,37 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        @if(Auth::check()) 
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            Profile
                         </x-dropdown-link>
 
-                        @if (Auth::user()->user_type === 'user')
-                        <x-dropdown-link :href="route('order.index')">
-                            My Orders
-                        </x-dropdown-link>
+                        @if (Auth::check() && Auth::user()->user_type === 'user')
+                            <x-dropdown-link :href="route('order.index')">
+                                My Orders
+                            </x-dropdown-link>
                         @endif
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
+                                Log Out
                             </x-dropdown-link>
                         </form>
+
+                        @else
+                        <x-dropdown-link :href="route('login')">
+                            Login
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('register')">
+                            Register
+                        </x-dropdown-link>
+                        @endif
+
+
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -95,16 +119,16 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('homes')" :active="request()->routeIs('homes')">
+                {{ __('homes') }}
             </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="font-medium text-base text-gray-800">{{ Auth::check() ? Auth::user()->name : 'Guest' }}</div>
+                <div class="font-medium text-sm text-gray-500">{{ Auth::check() ? Auth::user()->email : '' }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
@@ -116,8 +140,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>

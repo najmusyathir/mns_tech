@@ -13,11 +13,19 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-
-
+Route::get('/', function () {
+    return redirect('/index');
+});
+// Default pages
+{
+    Route::view('/about', 'default.about')->name('about'); 
+    Route::view('/contact', 'default.contact')->name('contact'); 
+    Route::view('/faqs', 'default.faqs')->name('faqs'); 
+    Route::view('/index', 'default.home')->name('homes'); 
+}
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('default.home');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

@@ -22,7 +22,7 @@
 
                     <div class="content flex flex-col" style="border-radius: 20px; background: #0009;">
                         <a href="{{route('products.index')}}" class="bg-red-900 p-2 m-4 rounded-full w-fit" style="top: 0;left:0">
-                            <img src="{{asset('assets/icons/ic_left.svg')}}" style="height: 40px; width:auto;z-index:80; !important">
+                            <img src="{{asset('assets/icons/ic_left.svg')}}" style="height: 40px; width:auto;z-index:70 !important;">
                         </a>
                         <div class="flex items-center justify-center relative pb-10 px-10 ">
                             <div class="form-containermin-w-full flex flex-col">

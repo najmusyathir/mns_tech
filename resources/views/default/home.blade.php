@@ -1,10 +1,10 @@
 <style>
     .card {
-        background: none !important;
+        background: #000a !important;        
         margin: 20px;
         padding: 80px 0;
         border: 1px #fff5 solid !important;
-        border-radius: 15px;
+        border-radius: 15px !important;
         transition: 400ms;
         justify-content: end;
     }
@@ -20,8 +20,11 @@
 
 <x-app-layout style="background: #000;">
     <div class=" bg-black text-white/50">
-        <img id="background" class="absolute -left-20 top-0 max-w-[877px]"
-            src="{{ asset('assets/images/setup.jpg') }}" />
+        <div class="absolute w-full">
+            <div class="absolute w-full h-full -top-20" style="background: #0007"></div>
+            <img id="background" class="w-full"
+            src="{{ asset('assets/images/home_header2.jpg') }}" />
+        </div>
         <div
             class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
@@ -65,7 +68,7 @@
                         </a>
                     </div>
 
-                    <div class="flex flex-wrap text-gray-300 my-32 justify-center items center">
+                    <div class="flex flex-wrap text-gray-300 my-20 py-10 justify-center items center" style="border-top: 2px solid #900;border-bottom: 2px solid #900;">
 
                         <div class="flex flex-col ring-white/50 mx-3 px-4 card" style="width: 27%;min-width: 300px">
                             <img src="{{asset('assets/icons/ic_pc.svg')}}" style="width: 20%;">
@@ -99,7 +102,7 @@
                                 Delivering customized devices for a personalized digital experience</p>
                             <a href="" class='btn my-5'>Contact Us Now</a>
                         </div>
-                        <img src="{{asset('assets/images/pc_custom.jpg')}}" style='max-height: 300px'>
+                        <img src="{{asset('assets/images/pc_custom.jpg')}}" style='max-height: 400px'>
                     </div>
                 </main>
 
