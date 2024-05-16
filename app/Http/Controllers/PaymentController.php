@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\OrderItem;
 use App\Models\Shipping;
 use App\Models\User;
+use App\Models\Review;
 
 class PaymentController extends Controller
 {
@@ -18,14 +19,15 @@ class PaymentController extends Controller
         $payment = Payment::where('order_id', $order_id)->get();
         $shipping = Shipping::where('order_id', $order_id)->get();
         $user = User::where('id', $order->user_id)->first();
+        $reviews = Review::where('order_id', $order_id)->get();
 
-
-        return view('payment.payment_page', [
+            return view('payment.payment_page', [
             'user' => $user,
             'order' => $order,
             'order_items' => $order_items,
             'payments' => $payment,
             'shipping' => $shipping,
+            'reviews' => $reviews,
         ]);
     }
 

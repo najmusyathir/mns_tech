@@ -82,9 +82,8 @@
                                         @endif
                                     </div>
                                     <!-- Review -->
-                                    <div class="mt-20">
+                                    <div class="mt-20 w-full">
                                         <h2 class="text-3xl font-bold text-white w-full text-center my-4">Reviews</h2>
-
                                         <div class="flex flex-row flex-wrap w-full items-center justify-center">
                                             @foreach ($reviews as $review)
                                             <div style="width: 50%">

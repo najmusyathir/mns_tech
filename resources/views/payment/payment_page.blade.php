@@ -93,10 +93,29 @@
 
                                                 @if (Auth::user()->user_type === 'user' && $shipping[0]['status'] == "Order Delivered")
                                                     <td>
-                                                        <a class="btn m-1"
-                                                            href="{{route('review.index', ['order_item_id' => $item['id']])}}">Add
 
-                                                        </a>
+                                                        @if ($reviews->isEmpty())
+                                                            <a class="btn m-1"
+                                                                href="{{route('review.index', ['order_item_id' => $item['id']])}}">Add
+                                                            </a>
+                                                        @else
+                                                            @foreach ($reviews as $review)
+                                                                @if ($review->prod_id == $item->prod_id)
+                                                                    <a class="btn m-1"
+                                                                        href="{{route('review.index', ['order_item_id' => $item['id']])}}">Add
+                                                                    </a>
+
+                                                                @else
+                                                                    <a class="btn m-1"
+                                                                        href="{{route('products.details', ['id' => $item['product_id']])}}">Check
+                                                                        Review
+                                                                    </a>
+                                                                @endif
+                                                            @endforeach
+
+                                                        @endif
+
+
                                                     </td>
                                                 @endif
                                             </tr>
@@ -297,7 +316,7 @@
                                                 @if($user->phone_no == null || $user->address == null)
                                                     <p class="text-red-600 text-lg font-semibold my-3">Waiting user to update Address
                                                         and Phone No</p>
-                                                    @else                                       <input type="submit" value="Update" class="w-fit btn m-0 mt-3">
+                                                    @else <input type="submit" value="Update" class="w-fit btn m-0 mt-3">
                                                 @endif
                                             </form>
                                         @endif
