@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ShippingController;
 use Illuminate\Support\Facades\Route;
 
@@ -58,7 +59,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/order/details/{order_id}', [OrderController::class, 'order_details'])->name('order.details');
     Route::post('order/cancel/{order_id}', [OrderController::class, 'order_cancel'])->name('order.cancel');
     Route::get('order/payment/{order_id}/invoice', [OrderController::class, 'create_invoice'])->name('order.invoice');
-
 }
 
 //Payment Related Route
@@ -74,6 +74,12 @@ Route::middleware('auth')->group(function () {
 //Shipping Related Route
 {
     Route::post('/order/{id}/update_shipment', [ShippingController::class, 'update_tracking'])->name('shipping.update_tracking');
+}
+
+//Review Related Route
+{
+    Route::get('/order-items/{order_item_id}/review', [ReviewController::class, 'index'])->name('review.index');
+    Route::post('/order-items/review/store/{id}', [ReviewController::class, 'store'])->name('review.store');
 }
 
 

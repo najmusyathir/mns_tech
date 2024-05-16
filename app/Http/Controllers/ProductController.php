@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\Review;
+use App\Models\User;
 
 class ProductController extends Controller
 {
@@ -52,7 +54,7 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product updated successfully!');
     }
 
-    public function delete(Request $request, $id)
+    public function delete($id)
     {
         $product = Product::findOrFail($id);
         $imagePath = public_path($product->prod_pic);
@@ -66,7 +68,7 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Product deleted successfully!');
     }
 
-    public function deleteFromDetails(Request $request, $id)
+    public function deleteFromDetails($id)
     {
         $product = Product::findOrFail($id);
         $imagePath = public_path($product->prod_pic);
@@ -80,13 +82,15 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
     }
 
-    public function show(Request $request, $id)
+    public function show($id)
     {
         $product = Product::findOrFail($id);
-        return view('products.prodDetails', ['product' => $product]);
+        $reviews = Review::with('user')->where('prod_id', $id)->get();
+       
+        return view('products.prodDetails', ['product' => $product, 'reviews'=>$reviews]);
     }
 
-    public function edit(Request $request, $id)
+    public function edit($id)
     {
         $product = Product::findOrFail($id);
         return view('products.prodEdit', ['product' => $product]);
