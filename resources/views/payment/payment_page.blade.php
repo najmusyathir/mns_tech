@@ -85,40 +85,40 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($order_items as $index => $item)
-                                            <tr>
-                                                <td>{{$index + 1}}.</td>
-                                                <td>{{$item['prod_title']}}</td>
-                                                <td>{{$item['quantity']}}</td>
-                                                <td>{{$item['price_per_item']}}</td>
+                                                                        <tr>
+                                                                            <td>{{$index + 1}}.</td>
+                                                                            <td>{{$item['prod_title']}}</td>
+                                                                            <td>{{$item['quantity']}}</td>
+                                                                            <td>{{$item['price_per_item']}}</td>
 
-                                                @if (Auth::user()->user_type === 'user' && $shipping[0]['status'] == "Order Delivered")
-                                                    <td>
+                                                                            @if (Auth::user()->user_type === 'user' && $shipping[0]['status'] == "Order Delivered")
+                                                                                                                <td>
 
-                                                        @if ($reviews->isEmpty())
-                                                            <a class="btn m-1"
-                                                                href="{{route('review.index', ['order_item_id' => $item['id']])}}">Add
-                                                            </a>
-                                                        @else
-                                                            @foreach ($reviews as $review)
-                                                                @if ($review->prod_id == $item->prod_id)
-                                                                    <a class="btn m-1"
-                                                                        href="{{route('review.index', ['order_item_id' => $item['id']])}}">Add
-                                                                    </a>
+                                                                                                                    @if ($reviews->isEmpty())
+                                                                                                                        <a class="btn m-1"
+                                                                                                                            href="{{ route('review.index', ['order_item_id' => $item['id']]) }}">Add</a>
+                                                                                                                    @else
+                                                                                                                        @php
+                                                                                                                            $found = false;
+                                                                                                                        @endphp
+                                                                                                                        @foreach ($reviews as $review)
+                                                                                                                            @if ($review->prod_id == $item->product_id)
+                                                                                                                                <a class="btn m-1"
+                                                                                                                                    href="{{ route('products.details', ['id' => $item['product_id']]) }}">Check
+                                                                                                                                    Review</a>
+                                                                                                                                @php $found = true; @endphp
+                                                                                                                                @break
+                                                                                                                            @endif
+                                                                                                                        @endforeach
+                                                                                                                        @if (!$found)
+                                                                                                                            <a class="btn m-1"
+                                                                                                                                href="{{ route('review.index', ['order_item_id' => $item['id']]) }}">Add</a>
+                                                                                                                        @endif
+                                                                                                                    @endif
 
-                                                                @else
-                                                                    <a class="btn m-1"
-                                                                        href="{{route('products.details', ['id' => $item['product_id']])}}">Check
-                                                                        Review
-                                                                    </a>
-                                                                @endif
-                                                            @endforeach
-
-                                                        @endif
-
-
-                                                    </td>
-                                                @endif
-                                            </tr>
+                                                                                                                </td>
+                                                                            @endif
+                                                                        </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
