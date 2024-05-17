@@ -51,7 +51,17 @@ class ProductController extends Controller
             $product->save();
         }
 
-        return view('products.index');
+        $products = Product::all();
+
+        
+        if(auth()->check()) {
+            $userId = auth()->user()->id;
+            $carts = Cart::where('user_id', $userId)->get();
+        } else {
+            $carts = [];
+        }
+
+        return view('products.index', compact('products', 'carts'));
     }
 
     public function delete($id)
