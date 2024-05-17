@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -19,12 +20,12 @@ class OrderController extends Controller
 
         if ($userType === 'user') {
             $userId = auth()->id();
-            $orders = Order::where("user_id", $userId)->get();
+            $orders = Order::where("user_id", $userId)->orderBy('created_at', 'desc')->get();
 
             $orderIds = $orders->pluck('id');
             $shippings = Shipping::whereIn("order_id", $orderIds)->get();
         } else if ($userType === 'admin') {
-            $orders = Order::all();
+            $orders = Order::orderBy('created_at', 'desc')->get();
             $shippings = Shipping::get();
         } else {
             abort(404);
@@ -61,6 +62,9 @@ class OrderController extends Controller
             $orderItem->price_per_item = $prod->prod_price;
             $orderId = $order->id;
             $orderItem->save();
+
+            $prod->prod_stock -= $cartItem->quantity;
+            $prod->save();
         }
 
         // Get all information for user and order_items
@@ -98,13 +102,28 @@ class OrderController extends Controller
         ]);
     }
 
-    public function order_cancel($order_id){
+    public function order_cancel($order_id)
+    {
         $order = Order::findOrFail($order_id);
-        $order->status = 'Order Cancelled';
-        $order->save();
+
+        if ($order->status !== 'Order Cancelled') {
+            $orderItems = OrderItem::where('order_id', $order->id)->get();
+
+            foreach ($orderItems as $orderItem) {
+                $product = Product::find($orderItem->product_id);
+                if ($product) {
+                    $product->prod_stock += $orderItem->quantity;
+                    $product->save();
+                }
+            }
+
+            $order->status = 'Order Cancelled';
+            $order->save();
+        }
 
         return redirect()->back();
     }
+
 
     public function create_invoice($order_id)
     {
@@ -119,4 +138,20 @@ class OrderController extends Controller
             'user' => $user
         ]);
     }
+
+    public function print_invoice($order_id)
+    {
+        $user_id = auth()->id();
+        $user = User::findOrFail($user_id);
+        $order = Order::with('orderItems')->findOrFail($order_id); 
+    
+        $pdf = Pdf::loadView('order.pdf_content', [
+            'order' => $order,
+            'order_items' => $order->orderItems,
+            'user' => $user
+        ]);
+    
+        return $pdf->download('invoice_' . $order_id . '.pdf');
+    }
+    
 }

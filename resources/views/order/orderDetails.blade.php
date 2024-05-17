@@ -87,7 +87,7 @@
 
                             @if ($order->status != "Payment Accepted")
                             @if ($order->status != "Order Cancelled")
-                            <a href="{{route("payment.attempt", ['order_id' => $order->id])}}" class="btn">
+                            <a href="{{route("payment.attempt", ['order_id' => $order->id])}}" class="mt-3 btn">
                                 Make payment
                             </a>
                             @endif

@@ -57,7 +57,7 @@
                                         @if (Auth::user()->user_type === 'admin')
                                         <div class="abs-rgt-btm flex">
 
-                                            <form method="POST" action="{{ route('products.edit', ['id' => $product->id] ) }}" class="btn" style="margin-right: 0;">
+                                            <form method="POST" action="{{ route('products.edit', ['id' => $product->id] ) }}" class="btn" style="margin-right: 20px;">
                                                 @csrf
                                                 @method('GET')
                                                 <button type="submit">Update</button>
@@ -100,24 +100,15 @@
                                                             {{$review->description}}
                                                         </div>
                                                     </div>
-
-
                                                 </div>
                                             </div>
                                             @endforeach
-
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
-
-
-
                 </div>
             </div>
 
@@ -129,7 +120,5 @@
         </div>
 
 
-    </div>
-    </div>
     </div>
 </x-app-layout>

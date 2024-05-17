@@ -51,7 +51,7 @@ class ProductController extends Controller
             $product->save();
         }
 
-        return redirect()->route('products.index')->with('success', 'Product updated successfully!');
+        return view('products.index');
     }
 
     public function delete($id)
@@ -65,7 +65,7 @@ class ProductController extends Controller
         $product->delete();
 
 
-        return redirect()->back()->with('success', 'Product deleted successfully!');
+        return view('products.index');
     }
 
     public function deleteFromDetails($id)
@@ -79,7 +79,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
+        return view('products.index');
     }
 
     public function show($id)

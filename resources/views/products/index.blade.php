@@ -149,7 +149,7 @@
 
                             @if (Auth::user()->user_type === 'admin')
 
-                            <form method="POST" action="{{ route('products.delete', ['id' => $product->id]) }}" class="btn abs-rgt-btm">
+                            <form method="POST" action="{{ route('products.delete', ['id' => $product->id]) }}" class="btn abs-rgt-btm" style="margin-right:20px">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit">Delete</button>

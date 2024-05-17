@@ -59,7 +59,7 @@
                                 <h3 class="text-xl text-red-600 font-bold text-right p-3 mb-6" style="border-bottom: dashed 1px white; border-top: dashed 1px white"><strong class="my-5">Total Price</strong> : RM {{$order->total_price}}</h3>
                                 <div class="w-full flex justify-center">
 
-                                    <a href="" class="btn m-1">
+                                    <a href="{{route('order.invoice.print',['order_id'=>$order->id])}}" class="btn m-1">
                                         Print Receipt
                                     </a>
                                 </div>
