@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Barryvdh\DomPDF\Facade\Pdf;
 
 use Illuminate\Http\Request;
@@ -41,16 +42,28 @@ class OrderController extends Controller
         $order->user_id = $userId;
         $order->total_price = $request->input('total_price');
         $order->status = $request->input('status');
-
         $order->save();
 
-        // Get the order ID
         $orderId = $order->id;
 
-        // Get all cart items for the user
         $cartItems = Cart::where("user_id", $userId)->get();
 
-        // Loop through cart items and create order_items
+        if ($cartItems->isEmpty()) {
+            $newOrder = Order::findOrFail($orderId);
+            $newOrder->delete();
+
+            $products = Product::all();
+
+            if(auth()->check()) {
+                $userId = auth()->user()->id;
+                $carts = Cart::where('user_id', $userId)->get();
+            } else {
+                $carts = [];
+            }
+
+            return view('products.index', compact('products', 'carts'));
+        }
+
         foreach ($cartItems as $cartItem) {
             $prod = Product::where("id", $cartItem->product_id)->first();
 
@@ -67,20 +80,13 @@ class OrderController extends Controller
             $prod->save();
         }
 
-        // Get all information for user and order_items
         $user = User::find($userId);
-
-        // Delete all cart items for the user
         Cart::where("user_id", $userId)->delete();
-
-        // Fetch order_items for the current order
         $orderItems = OrderItem::where('order_id', $orderId)->get();
 
-        // Create shipping record
         $shippingController = new ShippingController();
         $shippingController->create($orderId);
 
-        // Show page order created
         return view('order.post_create', [
             'order' => $order,
             'user' => $user,
@@ -143,15 +149,15 @@ class OrderController extends Controller
     {
         $user_id = auth()->id();
         $user = User::findOrFail($user_id);
-        $order = Order::with('orderItems')->findOrFail($order_id); 
-    
+        $order = Order::with('orderItems')->findOrFail($order_id);
+
         $pdf = Pdf::loadView('order.pdf_content', [
             'order' => $order,
             'order_items' => $order->orderItems,
             'user' => $user
         ]);
-    
+
         return $pdf->download('invoice_' . $order_id . '.pdf');
     }
-    
+
 }
