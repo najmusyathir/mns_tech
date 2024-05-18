@@ -100,7 +100,7 @@
                                 Needs</h2>
                             <p style="max-width: 60ch; padding:30px 0 50px 0">Tailoring technology to fit your needs -
                                 Delivering customized devices for a personalized digital experience</p>
-                            <a href="" class='btn my-5'>Contact Us Now</a>
+                            <a href="{{route('contact')}}" class='btn my-5'>Contact Us Now</a>
                         </div>
                         <img src="{{asset('assets/images/pc_custom.jpg')}}" style='max-height: 400px'>
                     </div>
