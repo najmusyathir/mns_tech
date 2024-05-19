@@ -1,6 +1,7 @@
 <style>
     select{
-        padding: 10
+        padding: 10px;
+
     }
 </style>
 <x-app-layout class="font-sans antialiased dark:bg-black dark:text-white/50">

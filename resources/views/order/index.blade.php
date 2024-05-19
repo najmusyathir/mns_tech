@@ -10,16 +10,7 @@
                     <h2 class="font-semibold text-4xl my-10 leading-tight" style="color: white; z-index:10 !important;">
                         Orders
                     </h2>
-                    @if (Auth::user()->user_type === 'admin')
-                        <div class="nav-orders">
-                            <a class="btn m-0 bg-black bg-opacity-50">All</a>
-                            <a class="btn m-0 bg-black bg-opacity-80">Pending Payment</a>
-                            <a class="btn m-0 bg-black bg-opacity-80">Pending Review</a>
-                            <a class="btn m-0 bg-black bg-opacity-80">Payment Accepted</a>
-                            <a class="btn m-0 bg-black bg-opacity-80">Payment Rejected</a>
-                        </div>
-                    @endif
-
+         
                     <div class="flex flex-col py-3" id="scrollable-div" style="min-height:60vh; overflow-y:scroll;">
                         @foreach ($orders as $order)
                                                 @if (Auth::user()->user_type === 'admin')
