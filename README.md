@@ -25,6 +25,7 @@ Welcome to MNS Tech Store, your one-stop shop for all things PC! Whether you're 
     > zip
 
 - run "composer install" in DIR of imported project
+- run 'composer require laravel/ui'
 - run 'npm install'
 - run 'npm run build'
 - copy .env.example = paste and rename it as .env

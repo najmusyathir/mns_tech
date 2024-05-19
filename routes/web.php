@@ -8,10 +8,9 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ShippingController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+
 
 Route::get('/', function () {
     return redirect('/index');
@@ -23,6 +22,8 @@ Route::get('/', function () {
     Route::view('/faqs', 'default.faqs')->name('faqs');
     Route::view('/index', 'default.home')->name('homes');
 }
+
+Auth::routes(['verify' => true]);
 
 Route::get('/dashboard', function () {
     return view('default.home');

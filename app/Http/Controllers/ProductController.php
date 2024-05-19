@@ -10,11 +10,16 @@ use App\Models\User;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
-
-        
+        $filterType = $request->input('type');
+    
+        if ($filterType) {
+            $products = Product::where('prod_type', $filterType)->get();
+        } else {
+            $products = Product::all();
+        }
+    
         if(auth()->check()) {
             $userId = auth()->user()->id;
             $carts = Cart::where('user_id', $userId)->get();
@@ -22,8 +27,9 @@ class ProductController extends Controller
             $carts = [];
         }
     
-        return view('products.index', compact('products', 'carts'));
+        return view('products.index', compact('products', 'carts', 'filterType'));
     }
+    
 
     public function store(Request $request)
     {
