@@ -81,7 +81,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex">
+                            <div class="flex flex-wrap">
                                 <div class="card-item">
                                     <img src="{{asset('assets/icons/ic_pin.svg')}}">
                                     <h3>Location</h3>

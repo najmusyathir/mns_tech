@@ -49,17 +49,18 @@ Route::middleware('auth')->group(function () {
 {
     Route::get('/email/verify', function () {
         return view('auth.verify-email');
-    })->Middleware(['auth'])->name('verification.notice');
-
-    Route::get('/email/verify/{id)/{hash}', function (EmailVerificationRequest $request) {
+    })->middleware(['auth'])->name('verification.notice');
+    
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request, $id, $hash) {
         $request->fulfill();
         return redirect('/profile');
-    })->Middleware(['auth', 'signed'])->name('verification.verify');
-
+    })->middleware(['auth', 'signed'])->name('verification.verify');
+    
     Route::get('/email/verification-notification', function (Request $request) {
         $request->user()->sendEmailVerificationNotification();
         return back()->with('message', 'Verification link sent!');
-    })->Middleware(['auth', '\throttle:6.2'])->name('verification.send');
+    })->middleware(['auth', 'throttle:6,2'])->name('verification.send');
+    
 }
 
 
