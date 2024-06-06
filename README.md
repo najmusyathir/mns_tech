@@ -24,6 +24,8 @@ Welcome to MNS Tech Store, your one-stop shop for all things PC! Whether you're 
     > pdo_mysql
     > zip
 
+- if encounter error like "VCRUNTIME140.dll and MSVCP140.dll missing in Windows 11", install this ( https://aka.ms/vs/17/release/vc_redist.x64.exe )
+
 - run "composer install" in DIR of imported project
 - run 'composer require laravel/ui'
 - run 'npm install'
