@@ -23,6 +23,7 @@ Welcome to MNS Tech Store, your one-stop shop for all things PC! Whether you're 
     > openssl
     > pdo_mysql
     > zip
+    > fileinfo
 
 - if encounter error like "VCRUNTIME140.dll and MSVCP140.dll missing in Windows 11", install this ( https://aka.ms/vs/17/release/vc_redist.x64.exe )
 
